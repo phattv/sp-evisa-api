@@ -1,0 +1,23 @@
+{
+  "name": "sp-evisa-api",
+  "version": "1.0.0",
+  "description": "api for evisa-vn.com",
+  "main": "index.js",
+  "scripts": {
+    "start": "node app.js",
+    "start:dev": "nodemon app.js",
+    "sequelize:init": "sequelize init",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Phat Tran",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "express": "^4.16.2",
+    "morgan": "^1.9.0",
+    "pg": "^7.4.1",
+    "pg-hstore": "^2.3.2",
+    "sequelize": "^4.32.6",
+    "sequelize-cli": "^4.0.0"
+  }
+}
