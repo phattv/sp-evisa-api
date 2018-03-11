@@ -31,7 +31,8 @@ function connect() {
     database: process.env.SQL_DATABASE || psqlConfigs.SQL_DATABASE,
   };
   const instanceConnectionName =
-    process.env.INSTANCE_CONNECTION_NAME || psqlConfigs.INSTANCE_CONNECTION_NAME;
+    process.env.INSTANCE_CONNECTION_NAME ||
+    psqlConfigs.INSTANCE_CONNECTION_NAME;
 
   if (instanceConnectionName && process.env.NODE_ENV === 'production') {
     config.host = `/cloudsql/${instanceConnectionName}`;
@@ -52,7 +53,11 @@ function connect() {
 //</editor-fold>
 
 //<editor-fold desc="endpoint configs">
-app.get('/', (req, res) => res.status(200).send('evisa-vn.com API server'));
+app.get('/', (req, res) =>
+  res
+    .status(200)
+    .send('evisa-vn.com API server, environment: ' + process.env.NODE_ENV),
+);
 app.get('/country', (req, res, next) => {
   return getCountries(knex)
     .then(visits => {
@@ -79,5 +84,6 @@ function getCountries(knex) {
 //</editor-fold>
 
 const server = http.createServer(app).listen(port, () => {
+  console.log('environment:', process.env.NODE_ENV);
   console.log('app is listening on port ' + port);
 });
