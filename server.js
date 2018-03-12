@@ -35,11 +35,10 @@ function connect() {
     psqlConfigs.INSTANCE_CONNECTION_NAME;
 
   if (instanceConnectionName && process.env.NODE_ENV === 'production') {
-    config.host = `/cloudsql/${instanceConnectionName}`;
+    config.socketPath = `/cloudsql/${instanceConnectionName}`;
   } else {
     config.host = '127.0.0.1';
   }
-  console.log('xxx', config);
 
   // Connect to the database
   const knex = Knex({
