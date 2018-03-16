@@ -39,7 +39,7 @@ module.exports = app => {
   app.get('/country', (req, res, next) => {
     return knex
       .select()
-      .from(tables.country + "123")
+      .from(tables.country)
       .then(countries => {
         res
           .status(200)
