@@ -22,16 +22,14 @@ function connect() {
   }
 
   // Connect to the database
-  const knex = Knex({
+  return Knex({
     client: 'pg',
     connection: config,
   });
   // [END connect]
-
-  return knex;
 }
 
-module.exports = function(app) {
+module.exports = app => {
   app.get('/', (req, res) =>
     res
       .status(200)
@@ -39,28 +37,20 @@ module.exports = function(app) {
   );
 
   app.get('/country', (req, res, next) => {
-    return getCountries(knex)
-      .then(visits => {
+    return knex
+      .select()
+      .from(tables.country + "123")
+      .then(countries => {
         res
           .status(200)
-          .set('Content-Type', 'text/plain')
-          .send(`Last 10 countries:\n${visits.join('\n')}`)
+          .send(countries)
           .end();
       })
-      .catch(err => {
-        next(err);
-      });
+      .catch(err => logErrors(err, next));
   });
-
-  function getCountries(knex) {
-    return knex
-      .select('id', 'name')
-      .from(tables.country)
-      .limit(10)
-      .then(results => {
-        return results.map(
-          country => `Id: ${country.id}, name: ${country.name}`,
-        );
-      });
-  }
 };
+
+function logErrors(err, next) {
+  console.error('xxx ERROR!', err.stack);
+  next(err);
+}
