@@ -1,12 +1,13 @@
 create table if not exists fee (
-  id int not null,
-  country_iso3 char(3) references country(iso3),
-  type varchar(10),
-  one_month_single int,
-  one_month_multiple int,
-  three_month_single int,
-  three_month_multiple int,
-  six_month_multiple int,
-  one_year_multiple int,
-  primary key (id)
+  id serial not null,
+  country_iso char(2) references country(iso) not null,
+  type varchar(10) not null,
+  one_month_single int default(0),
+  one_month_multiple int default(0),
+  three_month_single int default(0),
+  three_month_multiple int default(0),
+  six_month_multiple int default(0),
+  one_year_multiple int default(0),
+  primary key (id),
+  unique(country_iso, type)
 );
