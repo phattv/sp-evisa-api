@@ -10,12 +10,9 @@ function connect() {
     password: process.env.SQL_PASSWORD || psqlConfigs.SQL_PASSWORD,
     database: process.env.SQL_DATABASE || psqlConfigs.SQL_DATABASE,
   };
-  const instanceConnectionName =
-    process.env.INSTANCE_CONNECTION_NAME ||
-    psqlConfigs.INSTANCE_CONNECTION_NAME;
 
-  if (instanceConnectionName && process.env.NODE_ENV === 'production') {
-    config.socketPath = `/cloudsql/${instanceConnectionName}`;
+  if (process.env.NODE_ENV === 'production') {
+    config.host = '10.148.0.2';
   } else {
     config.host = '127.0.0.1';
   }
@@ -67,7 +64,6 @@ module.exports = app => {
 
   app.post('/fee', (req, res, next) => {
     const fee = req.body;
-    console.log('xxx', fee);
     if (Object.keys(fee).length === 0) {
       return returnBadRequest(res);
     } else if (!fee.country_iso) {
