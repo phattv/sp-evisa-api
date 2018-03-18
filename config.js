@@ -4,13 +4,11 @@ const localConfigurations = {
   SQL_USER: 'postgres',
   SQL_PASSWORD: '',
   SQL_DATABASE: 'postgres',
-  INSTANCE_CONNECTION_NAME: '',
 };
 const productionConfigurations = {
-  SQL_USER: 'postgres',
-  SQL_PASSWORD: 'Vanph@t93',
-  SQL_DATABASE: 'postgres',
-  INSTANCE_CONNECTION_NAME: 'evisavn-188706:asia-east1:evisavn-psql',
+  SQL_USER: 'phat',
+  SQL_PASSWORD: 'phat12345',
+  SQL_DATABASE: 'evisa',
 };
 
 module.exports =
