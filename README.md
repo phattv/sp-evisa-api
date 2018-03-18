@@ -1,4 +1,4 @@
 - `yarn install`
-- `yarn start:dev` or `yarn:prod`
+- `yarn start:dev` or `yarn start:prod`
 
 for routes view `routes.js`
