@@ -1,6 +1,6 @@
 const Knex = require('knex');
-const psqlConfigs = require('./config');
-const tables = require('./tables.json');
+const psqlConfigs = require('../config');
+const tables = require('../tables.json');
 const knex = connect();
 
 function connect() {
@@ -26,7 +26,7 @@ module.exports = app => {
       .send('evisa-vn.com API server, environment: ' + process.env.NODE_ENV),
   );
 
-  app.get('/country', (req, res, next) => {
+  app.get('/countries', (req, res, next) => {
     return knex
       .select()
       .from(tables.country)
@@ -39,12 +39,39 @@ module.exports = app => {
       .catch(err => logErrors(err, next));
   });
 
+  app.get('/countries/:id', (req, res, next) => {
+    if (Object.keys(req.params).length === 0) {
+      return returnBadRequest(res, 'invalid params');
+    }
+    return knex
+      .select()
+      .from(tables.country)
+      .where('id', req.params.id)
+      .then(countries => {
+        res
+          .status(200)
+          .send((countries || [])[0])
+          .end();
+      })
+      .catch(err => logErrors(err, next));
+  });
+
   app.get('/fees', (req, res, next) => {
     return knex
-      .select('*')
+      .select(
+        `${tables.country}.id as country_id`,
+        `${tables.fee}.id`,
+        'type',
+        'one_month_single',
+        'one_month_multiple',
+        'three_month_single',
+        'three_month_multiple',
+        'six_month_multiple',
+        'one_year_multiple',
+      )
       .from(tables.fee)
       .join(tables.country, function() {
-        this.on(`${tables.fee}.country_iso`, '=', `${tables.country}.iso`);
+        this.on(`${tables.fee}.country_id`, '=', `${tables.country}.id`);
       })
       .then(fees => {
         res
@@ -55,37 +82,20 @@ module.exports = app => {
       .catch(err => logErrors(err, next));
   });
 
-  app.get('/fee', (req, res, next) => {
-    if (Object.keys(req.query).length === 0) {
-      return returnBadRequest(res, 'invalid "country_iso"');
-    } else {
-      return knex
-        .select()
-        .from(tables.fee)
-        .where('country_iso', req.query.country_iso.toUpperCase())
-        .then(fees => {
-          res
-            .status(200)
-            .send(fees)
-            .end();
-        })
-        .catch(err => logErrors(err, next));
-    }
-  });
-
-  app.post('/fee', (req, res, next) => {
+  app.post('/fees', (req, res, next) => {
     const validTypes = ['tourist', 'business'];
     const fee = req.body;
+    console.log('xxx', fee);
     if (Object.keys(fee).length === 0) {
       return returnBadRequest(res);
-    } else if (!fee.country_iso) {
-      return returnBadRequest(res, 'invalid "country_iso"');
+    } else if (!fee.country_id) {
+      return returnBadRequest(res, 'invalid "country_id"');
     } else if (!fee.type || !validTypes.includes(fee.type)) {
       return returnBadRequest(res, 'invalid "type"');
     } else {
       return knex
         .insert({
-          country_iso: fee.country_iso,
+          country_id: fee.country_id,
           type: fee.type,
           one_month_single: fee.one_month_single,
           one_month_multiple: fee.one_month_multiple,
