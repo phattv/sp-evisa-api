@@ -3,7 +3,7 @@ const process = require('process');
 const localConfigurations = {
   SQL_USER: 'postgres',
   SQL_PASSWORD: '',
-  SQL_DATABASE: 'postgres',
+  SQL_DATABASE: 'evisa',
 };
 const productionConfigurations = {
   SQL_USER: 'phat',

@@ -39,6 +39,22 @@ module.exports = app => {
       .catch(err => logErrors(err, next));
   });
 
+  app.get('/fees', (req, res, next) => {
+    return knex
+      .select('*')
+      .from(tables.fee)
+      .join(tables.country, function() {
+        this.on(`${tables.fee}.country_iso`, '=', `${tables.country}.iso`);
+      })
+      .then(fees => {
+        res
+          .status(200)
+          .send(fees)
+          .end();
+      })
+      .catch(err => logErrors(err, next));
+  });
+
   app.get('/fee', (req, res, next) => {
     if (Object.keys(req.query).length === 0) {
       return returnBadRequest(res, 'invalid "country_iso"');
@@ -46,7 +62,7 @@ module.exports = app => {
       return knex
         .select()
         .from(tables.fee)
-        .where('country_iso', req.query.id)
+        .where('country_iso', req.query.country_iso.toUpperCase())
         .then(fees => {
           res
             .status(200)
@@ -58,12 +74,13 @@ module.exports = app => {
   });
 
   app.post('/fee', (req, res, next) => {
+    const validTypes = ['tourist', 'business'];
     const fee = req.body;
     if (Object.keys(fee).length === 0) {
       return returnBadRequest(res);
     } else if (!fee.country_iso) {
       return returnBadRequest(res, 'invalid "country_iso"');
-    } else if (!fee.type || !['tourist', 'business'].includes(fee.type)) {
+    } else if (!fee.type || !validTypes.includes(fee.type)) {
       return returnBadRequest(res, 'invalid "type"');
     } else {
       return knex
