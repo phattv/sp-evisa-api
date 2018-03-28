@@ -5,252 +5,248 @@ CREATE TABLE IF NOT EXISTS country (
     id int NOT NULL DEFAULT NEXTVAL ('country_seq'),
     iso char(2) NOT NULL UNIQUE,
     name varchar(80) NOT NULL,
-    nicename varchar(80) NOT NULL,
-    iso3 char(3) DEFAULT NULL UNIQUE,
-    numcode smallint DEFAULT NULL,
     phonecode int NOT NULL,
     PRIMARY KEY (id)
   );
 --
 -- Dumping data for table `country`
 --
-INSERT INTO country (id, iso, name, nicename, iso3, numcode, phonecode) VALUES
-(1, 'AF', 'AFGHANISTAN', 'Afghanistan', 'AFG', 4, 93),
-(2, 'AL', 'ALBANIA', 'Albania', 'ALB', 8, 355),
-(3, 'DZ', 'ALGERIA', 'Algeria', 'DZA', 12, 213),
-(4, 'AS', 'AMERICAN SAMOA', 'American Samoa', 'ASM', 16, 1684),
-(5, 'AD', 'ANDORRA', 'Andorra', 'AND', 20, 376),
-(6, 'AO', 'ANGOLA', 'Angola', 'AGO', 24, 244),
-(7, 'AI', 'ANGUILLA', 'Anguilla', 'AIA', 660, 1264),
-(8, 'AQ', 'ANTARCTICA', 'Antarctica', NULL, NULL, 0),
-(9, 'AG', 'ANTIGUA AND BARBUDA', 'Antigua and Barbuda', 'ATG', 28, 1268),
-(10, 'AR', 'ARGENTINA', 'Argentina', 'ARG', 32, 54),
-(11, 'AM', 'ARMENIA', 'Armenia', 'ARM', 51, 374),
-(12, 'AW', 'ARUBA', 'Aruba', 'ABW', 533, 297),
-(13, 'AU', 'AUSTRALIA', 'Australia', 'AUS', 36, 61),
-(14, 'AT', 'AUSTRIA', 'Austria', 'AUT', 40, 43),
-(15, 'AZ', 'AZERBAIJAN', 'Azerbaijan', 'AZE', 31, 994),
-(16, 'BS', 'BAHAMAS', 'Bahamas', 'BHS', 44, 1242),
-(17, 'BH', 'BAHRAIN', 'Bahrain', 'BHR', 48, 973),
-(18, 'BD', 'BANGLADESH', 'Bangladesh', 'BGD', 50, 880),
-(19, 'BB', 'BARBADOS', 'Barbados', 'BRB', 52, 1246),
-(20, 'BY', 'BELARUS', 'Belarus', 'BLR', 112, 375),
-(21, 'BE', 'BELGIUM', 'Belgium', 'BEL', 56, 32),
-(22, 'BZ', 'BELIZE', 'Belize', 'BLZ', 84, 501),
-(23, 'BJ', 'BENIN', 'Benin', 'BEN', 204, 229),
-(24, 'BM', 'BERMUDA', 'Bermuda', 'BMU', 60, 1441),
-(25, 'BT', 'BHUTAN', 'Bhutan', 'BTN', 64, 975),
-(26, 'BO', 'BOLIVIA', 'Bolivia', 'BOL', 68, 591),
-(27, 'BA', 'BOSNIA AND HERZEGOVINA', 'Bosnia and Herzegovina', 'BIH', 70, 387),
-(28, 'BW', 'BOTSWANA', 'Botswana', 'BWA', 72, 267),
-(29, 'BV', 'BOUVET ISLAND', 'Bouvet Island', NULL, NULL, 0),
-(30, 'BR', 'BRAZIL', 'Brazil', 'BRA', 76, 55),
-(31, 'IO', 'BRITISH INDIAN OCEAN TERRITORY', 'British Indian Ocean Territory', NULL, NULL, 246),
-(32, 'BN', 'BRUNEI DARUSSALAM', 'Brunei Darussalam', 'BRN', 96, 673),
-(33, 'BG', 'BULGARIA', 'Bulgaria', 'BGR', 100, 359),
-(34, 'BF', 'BURKINA FASO', 'Burkina Faso', 'BFA', 854, 226),
-(35, 'BI', 'BURUNDI', 'Burundi', 'BDI', 108, 257),
-(36, 'KH', 'CAMBODIA', 'Cambodia', 'KHM', 116, 855),
-(37, 'CM', 'CAMEROON', 'Cameroon', 'CMR', 120, 237),
-(38, 'CA', 'CANADA', 'Canada', 'CAN', 124, 1),
-(39, 'CV', 'CAPE VERDE', 'Cape Verde', 'CPV', 132, 238),
-(40, 'KY', 'CAYMAN ISLANDS', 'Cayman Islands', 'CYM', 136, 1345),
-(41, 'CF', 'CENTRAL AFRICAN REPUBLIC', 'Central African Republic', 'CAF', 140, 236),
-(42, 'TD', 'CHAD', 'Chad', 'TCD', 148, 235),
-(43, 'CL', 'CHILE', 'Chile', 'CHL', 152, 56),
-(44, 'CN', 'CHINA', 'China', 'CHN', 156, 86),
-(45, 'CX', 'CHRISTMAS ISLAND', 'Christmas Island', NULL, NULL, 61),
-(46, 'CC', 'COCOS (KEELING) ISLANDS', 'Cocos (Keeling) Islands', NULL, NULL, 672),
-(47, 'CO', 'COLOMBIA', 'Colombia', 'COL', 170, 57),
-(48, 'KM', 'COMOROS', 'Comoros', 'COM', 174, 269),
-(49, 'CG', 'CONGO', 'Congo', 'COG', 178, 242),
-(50, 'CD', 'CONGO, THE DEMOCRATIC REPUBLIC OF THE', 'Congo, the Democratic Republic of the', 'COD', 180, 242),
-(51, 'CK', 'COOK ISLANDS', 'Cook Islands', 'COK', 184, 682),
-(52, 'CR', 'COSTA RICA', 'Costa Rica', 'CRI', 188, 506),
-(53, 'CI', 'COTE D''IVOIRE', 'Cote D''Ivoire', 'CIV', 384, 225),
-(54, 'HR', 'CROATIA', 'Croatia', 'HRV', 191, 385),
-(55, 'CU', 'CUBA', 'Cuba', 'CUB', 192, 53),
-(56, 'CY', 'CYPRUS', 'Cyprus', 'CYP', 196, 357),
-(57, 'CZ', 'CZECH REPUBLIC', 'Czech Republic', 'CZE', 203, 420),
-(58, 'DK', 'DENMARK', 'Denmark', 'DNK', 208, 45),
-(59, 'DJ', 'DJIBOUTI', 'Djibouti', 'DJI', 262, 253),
-(60, 'DM', 'DOMINICA', 'Dominica', 'DMA', 212, 1767),
-(61, 'DO', 'DOMINICAN REPUBLIC', 'Dominican Republic', 'DOM', 214, 1809),
-(62, 'EC', 'ECUADOR', 'Ecuador', 'ECU', 218, 593),
-(63, 'EG', 'EGYPT', 'Egypt', 'EGY', 818, 20),
-(64, 'SV', 'EL SALVADOR', 'El Salvador', 'SLV', 222, 503),
-(65, 'GQ', 'EQUATORIAL GUINEA', 'Equatorial Guinea', 'GNQ', 226, 240),
-(66, 'ER', 'ERITREA', 'Eritrea', 'ERI', 232, 291),
-(67, 'EE', 'ESTONIA', 'Estonia', 'EST', 233, 372),
-(68, 'ET', 'ETHIOPIA', 'Ethiopia', 'ETH', 231, 251),
-(69, 'FK', 'FALKLAND ISLANDS (MALVINAS)', 'Falkland Islands (Malvinas)', 'FLK', 238, 500),
-(70, 'FO', 'FAROE ISLANDS', 'Faroe Islands', 'FRO', 234, 298),
-(71, 'FJ', 'FIJI', 'Fiji', 'FJI', 242, 679),
-(72, 'FI', 'FINLAND', 'Finland', 'FIN', 246, 358),
-(73, 'FR', 'FRANCE', 'France', 'FRA', 250, 33),
-(74, 'GF', 'FRENCH GUIANA', 'French Guiana', 'GUF', 254, 594),
-(75, 'PF', 'FRENCH POLYNESIA', 'French Polynesia', 'PYF', 258, 689),
-(76, 'TF', 'FRENCH SOUTHERN TERRITORIES', 'French Southern Territories', NULL, NULL, 0),
-(77, 'GA', 'GABON', 'Gabon', 'GAB', 266, 241),
-(78, 'GM', 'GAMBIA', 'Gambia', 'GMB', 270, 220),
-(79, 'GE', 'GEORGIA', 'Georgia', 'GEO', 268, 995),
-(80, 'DE', 'GERMANY', 'Germany', 'DEU', 276, 49),
-(81, 'GH', 'GHANA', 'Ghana', 'GHA', 288, 233),
-(82, 'GI', 'GIBRALTAR', 'Gibraltar', 'GIB', 292, 350),
-(83, 'GR', 'GREECE', 'Greece', 'GRC', 300, 30),
-(84, 'GL', 'GREENLAND', 'Greenland', 'GRL', 304, 299),
-(85, 'GD', 'GRENADA', 'Grenada', 'GRD', 308, 1473),
-(86, 'GP', 'GUADELOUPE', 'Guadeloupe', 'GLP', 312, 590),
-(87, 'GU', 'GUAM', 'Guam', 'GUM', 316, 1671),
-(88, 'GT', 'GUATEMALA', 'Guatemala', 'GTM', 320, 502),
-(89, 'GN', 'GUINEA', 'Guinea', 'GIN', 324, 224),
-(90, 'GW', 'GUINEA-BISSAU', 'Guinea-Bissau', 'GNB', 624, 245),
-(91, 'GY', 'GUYANA', 'Guyana', 'GUY', 328, 592),
-(92, 'HT', 'HAITI', 'Haiti', 'HTI', 332, 509),
-(93, 'HM', 'HEARD ISLAND AND MCDONALD ISLANDS', 'Heard Island and Mcdonald Islands', NULL, NULL, 0),
-(94, 'VA', 'HOLY SEE (VATICAN CITY STATE)', 'Holy See (Vatican City State)', 'VAT', 336, 39),
-(95, 'HN', 'HONDURAS', 'Honduras', 'HND', 340, 504),
-(96, 'HK', 'HONG KONG', 'Hong Kong', 'HKG', 344, 852),
-(97, 'HU', 'HUNGARY', 'Hungary', 'HUN', 348, 36),
-(98, 'IS', 'ICELAND', 'Iceland', 'ISL', 352, 354),
-(99, 'IN', 'INDIA', 'India', 'IND', 356, 91),
-(100, 'ID', 'INDONESIA', 'Indonesia', 'IDN', 360, 62),
-(101, 'IR', 'IRAN, ISLAMIC REPUBLIC OF', 'Iran, Islamic Republic of', 'IRN', 364, 98),
-(102, 'IQ', 'IRAQ', 'Iraq', 'IRQ', 368, 964),
-(103, 'IE', 'IRELAND', 'Ireland', 'IRL', 372, 353),
-(104, 'IL', 'ISRAEL', 'Israel', 'ISR', 376, 972),
-(105, 'IT', 'ITALY', 'Italy', 'ITA', 380, 39),
-(106, 'JM', 'JAMAICA', 'Jamaica', 'JAM', 388, 1876),
-(107, 'JP', 'JAPAN', 'Japan', 'JPN', 392, 81),
-(108, 'JO', 'JORDAN', 'Jordan', 'JOR', 400, 962),
-(109, 'KZ', 'KAZAKHSTAN', 'Kazakhstan', 'KAZ', 398, 7),
-(110, 'KE', 'KENYA', 'Kenya', 'KEN', 404, 254),
-(111, 'KI', 'KIRIBATI', 'Kiribati', 'KIR', 296, 686),
-(112, 'KP', 'KOREA, DEMOCRATIC PEOPLE''S REPUBLIC OF', 'Korea, Democratic People''s Republic of', 'PRK', 408, 850),
-(113, 'KR', 'KOREA, REPUBLIC OF', 'Korea, Republic of', 'KOR', 410, 82),
-(114, 'KW', 'KUWAIT', 'Kuwait', 'KWT', 414, 965),
-(115, 'KG', 'KYRGYZSTAN', 'Kyrgyzstan', 'KGZ', 417, 996),
-(116, 'LA', 'LAO PEOPLE''S DEMOCRATIC REPUBLIC', 'Lao People''s Democratic Republic', 'LAO', 418, 856),
-(117, 'LV', 'LATVIA', 'Latvia', 'LVA', 428, 371),
-(118, 'LB', 'LEBANON', 'Lebanon', 'LBN', 422, 961),
-(119, 'LS', 'LESOTHO', 'Lesotho', 'LSO', 426, 266),
-(120, 'LR', 'LIBERIA', 'Liberia', 'LBR', 430, 231),
-(121, 'LY', 'LIBYAN ARAB JAMAHIRIYA', 'Libyan Arab Jamahiriya', 'LBY', 434, 218),
-(122, 'LI', 'LIECHTENSTEIN', 'Liechtenstein', 'LIE', 438, 423),
-(123, 'LT', 'LITHUANIA', 'Lithuania', 'LTU', 440, 370),
-(124, 'LU', 'LUXEMBOURG', 'Luxembourg', 'LUX', 442, 352),
-(125, 'MO', 'MACAO', 'Macao', 'MAC', 446, 853),
-(126, 'MK', 'MACEDONIA, THE FORMER YUGOSLAV REPUBLIC OF', 'Macedonia, the Former Yugoslav Republic of', 'MKD', 807, 389),
-(127, 'MG', 'MADAGASCAR', 'Madagascar', 'MDG', 450, 261),
-(128, 'MW', 'MALAWI', 'Malawi', 'MWI', 454, 265),
-(129, 'MY', 'MALAYSIA', 'Malaysia', 'MYS', 458, 60),
-(130, 'MV', 'MALDIVES', 'Maldives', 'MDV', 462, 960),
-(131, 'ML', 'MALI', 'Mali', 'MLI', 466, 223),
-(132, 'MT', 'MALTA', 'Malta', 'MLT', 470, 356),
-(133, 'MH', 'MARSHALL ISLANDS', 'Marshall Islands', 'MHL', 584, 692),
-(134, 'MQ', 'MARTINIQUE', 'Martinique', 'MTQ', 474, 596),
-(135, 'MR', 'MAURITANIA', 'Mauritania', 'MRT', 478, 222),
-(136, 'MU', 'MAURITIUS', 'Mauritius', 'MUS', 480, 230),
-(137, 'YT', 'MAYOTTE', 'Mayotte', NULL, NULL, 269),
-(138, 'MX', 'MEXICO', 'Mexico', 'MEX', 484, 52),
-(139, 'FM', 'MICRONESIA, FEDERATED STATES OF', 'Micronesia, Federated States of', 'FSM', 583, 691),
-(140, 'MD', 'MOLDOVA, REPUBLIC OF', 'Moldova, Republic of', 'MDA', 498, 373),
-(141, 'MC', 'MONACO', 'Monaco', 'MCO', 492, 377),
-(142, 'MN', 'MONGOLIA', 'Mongolia', 'MNG', 496, 976),
-(143, 'MS', 'MONTSERRAT', 'Montserrat', 'MSR', 500, 1664),
-(144, 'MA', 'MOROCCO', 'Morocco', 'MAR', 504, 212),
-(145, 'MZ', 'MOZAMBIQUE', 'Mozambique', 'MOZ', 508, 258),
-(146, 'MM', 'MYANMAR', 'Myanmar', 'MMR', 104, 95),
-(147, 'NA', 'NAMIBIA', 'Namibia', 'NAM', 516, 264),
-(148, 'NR', 'NAURU', 'Nauru', 'NRU', 520, 674),
-(149, 'NP', 'NEPAL', 'Nepal', 'NPL', 524, 977),
-(150, 'NL', 'NETHERLANDS', 'Netherlands', 'NLD', 528, 31),
-(151, 'AN', 'NETHERLANDS ANTILLES', 'Netherlands Antilles', 'ANT', 530, 599),
-(152, 'NC', 'NEW CALEDONIA', 'New Caledonia', 'NCL', 540, 687),
-(153, 'NZ', 'NEW ZEALAND', 'New Zealand', 'NZL', 554, 64),
-(154, 'NI', 'NICARAGUA', 'Nicaragua', 'NIC', 558, 505),
-(155, 'NE', 'NIGER', 'Niger', 'NER', 562, 227),
-(156, 'NG', 'NIGERIA', 'Nigeria', 'NGA', 566, 234),
-(157, 'NU', 'NIUE', 'Niue', 'NIU', 570, 683),
-(158, 'NF', 'NORFOLK ISLAND', 'Norfolk Island', 'NFK', 574, 672),
-(159, 'MP', 'NORTHERN MARIANA ISLANDS', 'Northern Mariana Islands', 'MNP', 580, 1670),
-(160, 'NO', 'NORWAY', 'Norway', 'NOR', 578, 47),
-(161, 'OM', 'OMAN', 'Oman', 'OMN', 512, 968),
-(162, 'PK', 'PAKISTAN', 'Pakistan', 'PAK', 586, 92),
-(163, 'PW', 'PALAU', 'Palau', 'PLW', 585, 680),
-(164, 'PS', 'PALESTINIAN TERRITORY, OCCUPIED', 'Palestinian Territory, Occupied', NULL, NULL, 970),
-(165, 'PA', 'PANAMA', 'Panama', 'PAN', 591, 507),
-(166, 'PG', 'PAPUA NEW GUINEA', 'Papua New Guinea', 'PNG', 598, 675),
-(167, 'PY', 'PARAGUAY', 'Paraguay', 'PRY', 600, 595),
-(168, 'PE', 'PERU', 'Peru', 'PER', 604, 51),
-(169, 'PH', 'PHILIPPINES', 'Philippines', 'PHL', 608, 63),
-(170, 'PN', 'PITCAIRN', 'Pitcairn', 'PCN', 612, 0),
-(171, 'PL', 'POLAND', 'Poland', 'POL', 616, 48),
-(172, 'PT', 'PORTUGAL', 'Portugal', 'PRT', 620, 351),
-(173, 'PR', 'PUERTO RICO', 'Puerto Rico', 'PRI', 630, 1787),
-(174, 'QA', 'QATAR', 'Qatar', 'QAT', 634, 974),
-(175, 'RE', 'REUNION', 'Reunion', 'REU', 638, 262),
-(176, 'RO', 'ROMANIA', 'Romania', 'ROM', 642, 40),
-(177, 'RU', 'RUSSIAN FEDERATION', 'Russian Federation', 'RUS', 643, 70),
-(178, 'RW', 'RWANDA', 'Rwanda', 'RWA', 646, 250),
-(179, 'SH', 'SAINT HELENA', 'Saint Helena', 'SHN', 654, 290),
-(180, 'KN', 'SAINT KITTS AND NEVIS', 'Saint Kitts and Nevis', 'KNA', 659, 1869),
-(181, 'LC', 'SAINT LUCIA', 'Saint Lucia', 'LCA', 662, 1758),
-(182, 'PM', 'SAINT PIERRE AND MIQUELON', 'Saint Pierre and Miquelon', 'SPM', 666, 508),
-(183, 'VC', 'SAINT VINCENT AND THE GRENADINES', 'Saint Vincent and the Grenadines', 'VCT', 670, 1784),
-(184, 'WS', 'SAMOA', 'Samoa', 'WSM', 882, 684),
-(185, 'SM', 'SAN MARINO', 'San Marino', 'SMR', 674, 378),
-(186, 'ST', 'SAO TOME AND PRINCIPE', 'Sao Tome and Principe', 'STP', 678, 239),
-(187, 'SA', 'SAUDI ARABIA', 'Saudi Arabia', 'SAU', 682, 966),
-(188, 'SN', 'SENEGAL', 'Senegal', 'SEN', 686, 221),
-(189, 'CS', 'SERBIA AND MONTENEGRO', 'Serbia and Montenegro', NULL, NULL, 381),
-(190, 'SC', 'SEYCHELLES', 'Seychelles', 'SYC', 690, 248),
-(191, 'SL', 'SIERRA LEONE', 'Sierra Leone', 'SLE', 694, 232),
-(192, 'SG', 'SINGAPORE', 'Singapore', 'SGP', 702, 65),
-(193, 'SK', 'SLOVAKIA', 'Slovakia', 'SVK', 703, 421),
-(194, 'SI', 'SLOVENIA', 'Slovenia', 'SVN', 705, 386),
-(195, 'SB', 'SOLOMON ISLANDS', 'Solomon Islands', 'SLB', 90, 677),
-(196, 'SO', 'SOMALIA', 'Somalia', 'SOM', 706, 252),
-(197, 'ZA', 'SOUTH AFRICA', 'South Africa', 'ZAF', 710, 27),
-(198, 'GS', 'SOUTH GEORGIA AND THE SOUTH SANDWICH ISLANDS', 'South Georgia and the South Sandwich Islands', NULL, NULL, 0),
-(199, 'ES', 'SPAIN', 'Spain', 'ESP', 724, 34),
-(200, 'LK', 'SRI LANKA', 'Sri Lanka', 'LKA', 144, 94),
-(201, 'SD', 'SUDAN', 'Sudan', 'SDN', 736, 249),
-(202, 'SR', 'SURINAME', 'Suriname', 'SUR', 740, 597),
-(203, 'SJ', 'SVALBARD AND JAN MAYEN', 'Svalbard and Jan Mayen', 'SJM', 744, 47),
-(204, 'SZ', 'SWAZILAND', 'Swaziland', 'SWZ', 748, 268),
-(205, 'SE', 'SWEDEN', 'Sweden', 'SWE', 752, 46),
-(206, 'CH', 'SWITZERLAND', 'Switzerland', 'CHE', 756, 41),
-(207, 'SY', 'SYRIAN ARAB REPUBLIC', 'Syrian Arab Republic', 'SYR', 760, 963),
-(208, 'TW', 'TAIWAN, PROVINCE OF CHINA', 'Taiwan, Province of China', 'TWN', 158, 886),
-(209, 'TJ', 'TAJIKISTAN', 'Tajikistan', 'TJK', 762, 992),
-(210, 'TZ', 'TANZANIA, UNITED REPUBLIC OF', 'Tanzania, United Republic of', 'TZA', 834, 255),
-(211, 'TH', 'THAILAND', 'Thailand', 'THA', 764, 66),
-(212, 'TL', 'TIMOR-LESTE', 'Timor-Leste', NULL, NULL, 670),
-(213, 'TG', 'TOGO', 'Togo', 'TGO', 768, 228),
-(214, 'TK', 'TOKELAU', 'Tokelau', 'TKL', 772, 690),
-(215, 'TO', 'TONGA', 'Tonga', 'TON', 776, 676),
-(216, 'TT', 'TRINIDAD AND TOBAGO', 'Trinidad and Tobago', 'TTO', 780, 1868),
-(217, 'TN', 'TUNISIA', 'Tunisia', 'TUN', 788, 216),
-(218, 'TR', 'TURKEY', 'Turkey', 'TUR', 792, 90),
-(219, 'TM', 'TURKMENISTAN', 'Turkmenistan', 'TKM', 795, 7370),
-(220, 'TC', 'TURKS AND CAICOS ISLANDS', 'Turks and Caicos Islands', 'TCA', 796, 1649),
-(221, 'TV', 'TUVALU', 'Tuvalu', 'TUV', 798, 688),
-(222, 'UG', 'UGANDA', 'Uganda', 'UGA', 800, 256),
-(223, 'UA', 'UKRAINE', 'Ukraine', 'UKR', 804, 380),
-(224, 'AE', 'UNITED ARAB EMIRATES', 'United Arab Emirates', 'ARE', 784, 971),
-(225, 'GB', 'UNITED KINGDOM', 'United Kingdom', 'GBR', 826, 44),
-(226, 'US', 'UNITED STATES', 'United States', 'USA', 840, 1),
-(227, 'UM', 'UNITED STATES MINOR OUTLYING ISLANDS', 'United States Minor Outlying Islands', NULL, NULL, 1),
-(228, 'UY', 'URUGUAY', 'Uruguay', 'URY', 858, 598),
-(229, 'UZ', 'UZBEKISTAN', 'Uzbekistan', 'UZB', 860, 998),
-(230, 'VU', 'VANUATU', 'Vanuatu', 'VUT', 548, 678),
-(231, 'VE', 'VENEZUELA', 'Venezuela', 'VEN', 862, 58),
-(232, 'VN', 'VIET NAM', 'Viet Nam', 'VNM', 704, 84),
-(233, 'VG', 'VIRGIN ISLANDS, BRITISH', 'Virgin Islands, British', 'VGB', 92, 1284),
-(234, 'VI', 'VIRGIN ISLANDS, U.S.', 'Virgin Islands, U.s.', 'VIR', 850, 1340),
-(235, 'WF', 'WALLIS AND FUTUNA', 'Wallis and Futuna', 'WLF', 876, 681),
-(236, 'EH', 'WESTERN SAHARA', 'Western Sahara', 'ESH', 732, 212),
-(237, 'YE', 'YEMEN', 'Yemen', 'YEM', 887, 967),
-(238, 'ZM', 'ZAMBIA', 'Zambia', 'ZMB', 894, 260),
-(239, 'ZW', 'ZIMBABWE', 'Zimbabwe', 'ZWE', 716, 263);
+INSERT INTO country (id, iso, name, phonecode) VALUES (1, 'AF', 'Afghanistan', 93);
+INSERT INTO country (id, iso, name, phonecode) VALUES (2, 'AL', 'Albania', 355);
+INSERT INTO country (id, iso, name, phonecode) VALUES (3, 'DZ', 'Algeria', 213);
+INSERT INTO country (id, iso, name, phonecode) VALUES (4, 'AS', 'American Samoa', 1684);
+INSERT INTO country (id, iso, name, phonecode) VALUES (5, 'AD', 'Andorra', 376);
+INSERT INTO country (id, iso, name, phonecode) VALUES (6, 'AO', 'Angola', 244);
+INSERT INTO country (id, iso, name, phonecode) VALUES (7, 'AI', 'Anguilla', 1264);
+INSERT INTO country (id, iso, name, phonecode) VALUES (8, 'AQ', 'Antarctica', 0);
+INSERT INTO country (id, iso, name, phonecode) VALUES (9, 'AG', 'Antigua and Barbuda', 1268);
+INSERT INTO country (id, iso, name, phonecode) VALUES (10, 'AR', 'Argentina', 54);
+INSERT INTO country (id, iso, name, phonecode) VALUES (11, 'AM', 'Armenia', 374);
+INSERT INTO country (id, iso, name, phonecode) VALUES (12, 'AW', 'Aruba', 297);
+INSERT INTO country (id, iso, name, phonecode) VALUES (13, 'AU', 'Australia', 61);
+INSERT INTO country (id, iso, name, phonecode) VALUES (14, 'AT', 'Austria', 43);
+INSERT INTO country (id, iso, name, phonecode) VALUES (15, 'AZ', 'Azerbaijan', 994);
+INSERT INTO country (id, iso, name, phonecode) VALUES (16, 'BS', 'Bahamas', 1242);
+INSERT INTO country (id, iso, name, phonecode) VALUES (17, 'BH', 'Bahrain', 973);
+INSERT INTO country (id, iso, name, phonecode) VALUES (18, 'BD', 'Bangladesh', 880);
+INSERT INTO country (id, iso, name, phonecode) VALUES (19, 'BB', 'Barbados', 1246);
+INSERT INTO country (id, iso, name, phonecode) VALUES (20, 'BY', 'Belarus', 375);
+INSERT INTO country (id, iso, name, phonecode) VALUES (21, 'BE', 'Belgium', 32);
+INSERT INTO country (id, iso, name, phonecode) VALUES (22, 'BZ', 'Belize', 501);
+INSERT INTO country (id, iso, name, phonecode) VALUES (23, 'BJ', 'Benin', 229);
+INSERT INTO country (id, iso, name, phonecode) VALUES (24, 'BM', 'Bermuda', 1441);
+INSERT INTO country (id, iso, name, phonecode) VALUES (25, 'BT', 'Bhutan', 975);
+INSERT INTO country (id, iso, name, phonecode) VALUES (26, 'BO', 'Bolivia', 591);
+INSERT INTO country (id, iso, name, phonecode) VALUES (27, 'BA', 'Bosnia and Herzegovina', 387);
+INSERT INTO country (id, iso, name, phonecode) VALUES (28, 'BW', 'Botswana', 267);
+INSERT INTO country (id, iso, name, phonecode) VALUES (29, 'BV', 'Bouvet Island', 0);
+INSERT INTO country (id, iso, name, phonecode) VALUES (30, 'BR', 'Brazil', 55);
+INSERT INTO country (id, iso, name, phonecode) VALUES (31, 'IO', 'British Indian Ocean Territory', 246);
+INSERT INTO country (id, iso, name, phonecode) VALUES (32, 'BN', 'Brunei Darussalam', 673);
+INSERT INTO country (id, iso, name, phonecode) VALUES (33, 'BG', 'Bulgaria', 359);
+INSERT INTO country (id, iso, name, phonecode) VALUES (34, 'BF', 'Burkina Faso', 226);
+INSERT INTO country (id, iso, name, phonecode) VALUES (35, 'BI', 'Burundi', 257);
+INSERT INTO country (id, iso, name, phonecode) VALUES (36, 'KH', 'Cambodia', 855);
+INSERT INTO country (id, iso, name, phonecode) VALUES (37, 'CM', 'Cameroon', 237);
+INSERT INTO country (id, iso, name, phonecode) VALUES (38, 'CA', 'Canada', 1);
+INSERT INTO country (id, iso, name, phonecode) VALUES (39, 'CV', 'Cape Verde', 238);
+INSERT INTO country (id, iso, name, phonecode) VALUES (40, 'KY', 'Cayman Islands', 1345);
+INSERT INTO country (id, iso, name, phonecode) VALUES (41, 'CF', 'Central African Republic', 236);
+INSERT INTO country (id, iso, name, phonecode) VALUES (42, 'TD', 'Chad', 235);
+INSERT INTO country (id, iso, name, phonecode) VALUES (43, 'CL', 'Chile', 56);
+INSERT INTO country (id, iso, name, phonecode) VALUES (44, 'CN', 'China', 86);
+INSERT INTO country (id, iso, name, phonecode) VALUES (45, 'CX', 'Christmas Island', 61);
+INSERT INTO country (id, iso, name, phonecode) VALUES (46, 'CC', 'Cocos (Keeling) Islands', 672);
+INSERT INTO country (id, iso, name, phonecode) VALUES (47, 'CO', 'Colombia', 57);
+INSERT INTO country (id, iso, name, phonecode) VALUES (48, 'KM', 'Comoros', 269);
+INSERT INTO country (id, iso, name, phonecode) VALUES (49, 'CG', 'Congo', 242);
+INSERT INTO country (id, iso, name, phonecode) VALUES (50, 'CD', 'Congo, the Democratic Republic of the', 242);
+INSERT INTO country (id, iso, name, phonecode) VALUES (51, 'CK', 'Cook Islands', 682);
+INSERT INTO country (id, iso, name, phonecode) VALUES (52, 'CR', 'Costa Rica', 506);
+INSERT INTO country (id, iso, name, phonecode) VALUES (53, 'CI', 'Cote D''Ivoire', 225);
+INSERT INTO country (id, iso, name, phonecode) VALUES (54, 'HR', 'Croatia', 385);
+INSERT INTO country (id, iso, name, phonecode) VALUES (55, 'CU', 'Cuba', 53);
+INSERT INTO country (id, iso, name, phonecode) VALUES (56, 'CY', 'Cyprus', 357);
+INSERT INTO country (id, iso, name, phonecode) VALUES (57, 'CZ', 'Czech Republic', 420);
+INSERT INTO country (id, iso, name, phonecode) VALUES (58, 'DK', 'Denmark', 45);
+INSERT INTO country (id, iso, name, phonecode) VALUES (59, 'DJ', 'Djibouti', 253);
+INSERT INTO country (id, iso, name, phonecode) VALUES (60, 'DM', 'Dominica', 1767);
+INSERT INTO country (id, iso, name, phonecode) VALUES (61, 'DO', 'Dominican Republic', 1809);
+INSERT INTO country (id, iso, name, phonecode) VALUES (62, 'EC', 'Ecuador', 593);
+INSERT INTO country (id, iso, name, phonecode) VALUES (63, 'EG', 'Egypt', 20);
+INSERT INTO country (id, iso, name, phonecode) VALUES (64, 'SV', 'El Salvador', 503);
+INSERT INTO country (id, iso, name, phonecode) VALUES (65, 'GQ', 'Equatorial Guinea', 240);
+INSERT INTO country (id, iso, name, phonecode) VALUES (66, 'ER', 'Eritrea', 291);
+INSERT INTO country (id, iso, name, phonecode) VALUES (67, 'EE', 'Estonia', 372);
+INSERT INTO country (id, iso, name, phonecode) VALUES (68, 'ET', 'Ethiopia', 251);
+INSERT INTO country (id, iso, name, phonecode) VALUES (69, 'FK', 'Falkland Islands (Malvinas)', 500);
+INSERT INTO country (id, iso, name, phonecode) VALUES (70, 'FO', 'Faroe Islands', 298);
+INSERT INTO country (id, iso, name, phonecode) VALUES (71, 'FJ', 'Fiji', 679);
+INSERT INTO country (id, iso, name, phonecode) VALUES (72, 'FI', 'Finland', 358);
+INSERT INTO country (id, iso, name, phonecode) VALUES (73, 'FR', 'France', 33);
+INSERT INTO country (id, iso, name, phonecode) VALUES (74, 'GF', 'French Guiana', 594);
+INSERT INTO country (id, iso, name, phonecode) VALUES (75, 'PF', 'French Polynesia', 689);
+INSERT INTO country (id, iso, name, phonecode) VALUES (76, 'TF', 'French Southern Territories', 0);
+INSERT INTO country (id, iso, name, phonecode) VALUES (77, 'GA', 'Gabon', 241);
+INSERT INTO country (id, iso, name, phonecode) VALUES (78, 'GM', 'Gambia', 220);
+INSERT INTO country (id, iso, name, phonecode) VALUES (79, 'GE', 'Georgia', 995);
+INSERT INTO country (id, iso, name, phonecode) VALUES (80, 'DE', 'Germany', 49);
+INSERT INTO country (id, iso, name, phonecode) VALUES (81, 'GH', 'Ghana', 233);
+INSERT INTO country (id, iso, name, phonecode) VALUES (82, 'GI', 'Gibraltar', 350);
+INSERT INTO country (id, iso, name, phonecode) VALUES (83, 'GR', 'Greece', 30);
+INSERT INTO country (id, iso, name, phonecode) VALUES (84, 'GL', 'Greenland', 299);
+INSERT INTO country (id, iso, name, phonecode) VALUES (85, 'GD', 'Grenada', 1473);
+INSERT INTO country (id, iso, name, phonecode) VALUES (86, 'GP', 'Guadeloupe', 590);
+INSERT INTO country (id, iso, name, phonecode) VALUES (87, 'GU', 'Guam', 1671);
+INSERT INTO country (id, iso, name, phonecode) VALUES (88, 'GT', 'Guatemala', 502);
+INSERT INTO country (id, iso, name, phonecode) VALUES (89, 'GN', 'Guinea', 224);
+INSERT INTO country (id, iso, name, phonecode) VALUES (90, 'GW', 'Guinea-Bissau', 245);
+INSERT INTO country (id, iso, name, phonecode) VALUES (91, 'GY', 'Guyana', 592);
+INSERT INTO country (id, iso, name, phonecode) VALUES (92, 'HT', 'Haiti', 509);
+INSERT INTO country (id, iso, name, phonecode) VALUES (93, 'HM', 'Heard Island and Mcdonald Islands', 0);
+INSERT INTO country (id, iso, name, phonecode) VALUES (94, 'VA', 'Holy See (Vatican City State)', 39);
+INSERT INTO country (id, iso, name, phonecode) VALUES (95, 'HN', 'Honduras', 504);
+INSERT INTO country (id, iso, name, phonecode) VALUES (96, 'HK', 'Hong Kong', 852);
+INSERT INTO country (id, iso, name, phonecode) VALUES (97, 'HU', 'Hungary', 36);
+INSERT INTO country (id, iso, name, phonecode) VALUES (98, 'IS', 'Iceland', 354);
+INSERT INTO country (id, iso, name, phonecode) VALUES (99, 'IN', 'India', 91);
+INSERT INTO country (id, iso, name, phonecode) VALUES (100, 'ID', 'Indonesia', 62);
+INSERT INTO country (id, iso, name, phonecode) VALUES (101, 'IR', 'Iran, Islamic Republic of', 98);
+INSERT INTO country (id, iso, name, phonecode) VALUES (102, 'IQ', 'Iraq', 964);
+INSERT INTO country (id, iso, name, phonecode) VALUES (103, 'IE', 'Ireland', 353);
+INSERT INTO country (id, iso, name, phonecode) VALUES (104, 'IL', 'Israel', 972);
+INSERT INTO country (id, iso, name, phonecode) VALUES (105, 'IT', 'Italy', 39);
+INSERT INTO country (id, iso, name, phonecode) VALUES (106, 'JM', 'Jamaica', 1876);
+INSERT INTO country (id, iso, name, phonecode) VALUES (107, 'JP', 'Japan', 81);
+INSERT INTO country (id, iso, name, phonecode) VALUES (108, 'JO', 'Jordan', 962);
+INSERT INTO country (id, iso, name, phonecode) VALUES (109, 'KZ', 'Kazakhstan', 7);
+INSERT INTO country (id, iso, name, phonecode) VALUES (110, 'KE', 'Kenya', 254);
+INSERT INTO country (id, iso, name, phonecode) VALUES (111, 'KI', 'Kiribati', 686);
+INSERT INTO country (id, iso, name, phonecode) VALUES (112, 'KP', 'Korea, Democratic People''s Republic of', 850);
+INSERT INTO country (id, iso, name, phonecode) VALUES (113, 'KR', 'Korea, Republic of', 82);
+INSERT INTO country (id, iso, name, phonecode) VALUES (114, 'KW', 'Kuwait', 965);
+INSERT INTO country (id, iso, name, phonecode) VALUES (115, 'KG', 'Kyrgyzstan', 996);
+INSERT INTO country (id, iso, name, phonecode) VALUES (116, 'LA', 'Lao People''s Democratic Republic', 856);
+INSERT INTO country (id, iso, name, phonecode) VALUES (117, 'LV', 'Latvia', 371);
+INSERT INTO country (id, iso, name, phonecode) VALUES (118, 'LB', 'Lebanon', 961);
+INSERT INTO country (id, iso, name, phonecode) VALUES (119, 'LS', 'Lesotho', 266);
+INSERT INTO country (id, iso, name, phonecode) VALUES (120, 'LR', 'Liberia', 231);
+INSERT INTO country (id, iso, name, phonecode) VALUES (121, 'LY', 'Libyan Arab Jamahiriya', 218);
+INSERT INTO country (id, iso, name, phonecode) VALUES (122, 'LI', 'Liechtenstein', 423);
+INSERT INTO country (id, iso, name, phonecode) VALUES (123, 'LT', 'Lithuania', 370);
+INSERT INTO country (id, iso, name, phonecode) VALUES (124, 'LU', 'Luxembourg', 352);
+INSERT INTO country (id, iso, name, phonecode) VALUES (125, 'MO', 'Macao', 853);
+INSERT INTO country (id, iso, name, phonecode) VALUES (126, 'MK', 'Macedonia, the Former Yugoslav Republic of', 389);
+INSERT INTO country (id, iso, name, phonecode) VALUES (127, 'MG', 'Madagascar', 261);
+INSERT INTO country (id, iso, name, phonecode) VALUES (128, 'MW', 'Malawi', 265);
+INSERT INTO country (id, iso, name, phonecode) VALUES (129, 'MY', 'Malaysia', 60);
+INSERT INTO country (id, iso, name, phonecode) VALUES (130, 'MV', 'Maldives', 960);
+INSERT INTO country (id, iso, name, phonecode) VALUES (131, 'ML', 'Mali', 223);
+INSERT INTO country (id, iso, name, phonecode) VALUES (132, 'MT', 'Malta', 356);
+INSERT INTO country (id, iso, name, phonecode) VALUES (133, 'MH', 'Marshall Islands', 692);
+INSERT INTO country (id, iso, name, phonecode) VALUES (134, 'MQ', 'Martinique', 596);
+INSERT INTO country (id, iso, name, phonecode) VALUES (135, 'MR', 'Mauritania', 222);
+INSERT INTO country (id, iso, name, phonecode) VALUES (136, 'MU', 'Mauritius', 230);
+INSERT INTO country (id, iso, name, phonecode) VALUES (137, 'YT', 'Mayotte', 269);
+INSERT INTO country (id, iso, name, phonecode) VALUES (138, 'MX', 'Mexico', 52);
+INSERT INTO country (id, iso, name, phonecode) VALUES (139, 'FM', 'Micronesia, Federated States of', 691);
+INSERT INTO country (id, iso, name, phonecode) VALUES (140, 'MD', 'Moldova, Republic of', 373);
+INSERT INTO country (id, iso, name, phonecode) VALUES (141, 'MC', 'Monaco', 377);
+INSERT INTO country (id, iso, name, phonecode) VALUES (142, 'MN', 'Mongolia', 976);
+INSERT INTO country (id, iso, name, phonecode) VALUES (143, 'MS', 'Montserrat', 1664);
+INSERT INTO country (id, iso, name, phonecode) VALUES (144, 'MA', 'Morocco', 212);
+INSERT INTO country (id, iso, name, phonecode) VALUES (145, 'MZ', 'Mozambique', 258);
+INSERT INTO country (id, iso, name, phonecode) VALUES (146, 'MM', 'Myanmar', 95);
+INSERT INTO country (id, iso, name, phonecode) VALUES (147, 'NA', 'Namibia', 264);
+INSERT INTO country (id, iso, name, phonecode) VALUES (148, 'NR', 'Nauru', 674);
+INSERT INTO country (id, iso, name, phonecode) VALUES (149, 'NP', 'Nepal', 977);
+INSERT INTO country (id, iso, name, phonecode) VALUES (150, 'NL', 'Netherlands', 31);
+INSERT INTO country (id, iso, name, phonecode) VALUES (151, 'AN', 'Netherlands Antilles', 599);
+INSERT INTO country (id, iso, name, phonecode) VALUES (152, 'NC', 'New Caledonia', 687);
+INSERT INTO country (id, iso, name, phonecode) VALUES (153, 'NZ', 'New Zealand', 64);
+INSERT INTO country (id, iso, name, phonecode) VALUES (154, 'NI', 'Nicaragua', 505);
+INSERT INTO country (id, iso, name, phonecode) VALUES (155, 'NE', 'Niger', 227);
+INSERT INTO country (id, iso, name, phonecode) VALUES (156, 'NG', 'Nigeria', 234);
+INSERT INTO country (id, iso, name, phonecode) VALUES (157, 'NU', 'Niue', 683);
+INSERT INTO country (id, iso, name, phonecode) VALUES (158, 'NF', 'Norfolk Island', 672);
+INSERT INTO country (id, iso, name, phonecode) VALUES (159, 'MP', 'Northern Mariana Islands', 1670);
+INSERT INTO country (id, iso, name, phonecode) VALUES (160, 'NO', 'Norway', 47);
+INSERT INTO country (id, iso, name, phonecode) VALUES (161, 'OM', 'Oman', 968);
+INSERT INTO country (id, iso, name, phonecode) VALUES (162, 'PK', 'Pakistan', 92);
+INSERT INTO country (id, iso, name, phonecode) VALUES (163, 'PW', 'Palau', 680);
+INSERT INTO country (id, iso, name, phonecode) VALUES (164, 'PS', 'Palestinian Territory, Occupied', 970);
+INSERT INTO country (id, iso, name, phonecode) VALUES (165, 'PA', 'Panama', 507);
+INSERT INTO country (id, iso, name, phonecode) VALUES (166, 'PG', 'Papua New Guinea', 675);
+INSERT INTO country (id, iso, name, phonecode) VALUES (167, 'PY', 'Paraguay', 595);
+INSERT INTO country (id, iso, name, phonecode) VALUES (168, 'PE', 'Peru', 51);
+INSERT INTO country (id, iso, name, phonecode) VALUES (169, 'PH', 'Philippines', 63);
+INSERT INTO country (id, iso, name, phonecode) VALUES (170, 'PN', 'Pitcairn', 0);
+INSERT INTO country (id, iso, name, phonecode) VALUES (171, 'PL', 'Poland', 48);
+INSERT INTO country (id, iso, name, phonecode) VALUES (172, 'PT', 'Portugal', 351);
+INSERT INTO country (id, iso, name, phonecode) VALUES (173, 'PR', 'Puerto Rico', 1787);
+INSERT INTO country (id, iso, name, phonecode) VALUES (174, 'QA', 'Qatar', 974);
+INSERT INTO country (id, iso, name, phonecode) VALUES (175, 'RE', 'Reunion', 262);
+INSERT INTO country (id, iso, name, phonecode) VALUES (176, 'RO', 'Romania', 40);
+INSERT INTO country (id, iso, name, phonecode) VALUES (177, 'RU', 'Russian Federation', 70);
+INSERT INTO country (id, iso, name, phonecode) VALUES (178, 'RW', 'Rwanda', 250);
+INSERT INTO country (id, iso, name, phonecode) VALUES (179, 'SH', 'Saint Helena', 290);
+INSERT INTO country (id, iso, name, phonecode) VALUES (180, 'KN', 'Saint Kitts and Nevis', 1869);
+INSERT INTO country (id, iso, name, phonecode) VALUES (181, 'LC', 'Saint Lucia', 1758);
+INSERT INTO country (id, iso, name, phonecode) VALUES (182, 'PM', 'Saint Pierre and Miquelon', 508);
+INSERT INTO country (id, iso, name, phonecode) VALUES (183, 'VC', 'Saint Vincent and the Grenadines', 1784);
+INSERT INTO country (id, iso, name, phonecode) VALUES (184, 'WS', 'Samoa', 684);
+INSERT INTO country (id, iso, name, phonecode) VALUES (185, 'SM', 'San Marino', 378);
+INSERT INTO country (id, iso, name, phonecode) VALUES (186, 'ST', 'Sao Tome and Principe', 239);
+INSERT INTO country (id, iso, name, phonecode) VALUES (187, 'SA', 'Saudi Arabia', 966);
+INSERT INTO country (id, iso, name, phonecode) VALUES (188, 'SN', 'Senegal', 221);
+INSERT INTO country (id, iso, name, phonecode) VALUES (189, 'CS', 'Serbia and Montenegro', 381);
+INSERT INTO country (id, iso, name, phonecode) VALUES (190, 'SC', 'Seychelles', 248);
+INSERT INTO country (id, iso, name, phonecode) VALUES (191, 'SL', 'Sierra Leone', 232);
+INSERT INTO country (id, iso, name, phonecode) VALUES (192, 'SG', 'Singapore', 65);
+INSERT INTO country (id, iso, name, phonecode) VALUES (193, 'SK', 'Slovakia', 421);
+INSERT INTO country (id, iso, name, phonecode) VALUES (194, 'SI', 'Slovenia', 386);
+INSERT INTO country (id, iso, name, phonecode) VALUES (195, 'SB', 'Solomon Islands', 677);
+INSERT INTO country (id, iso, name, phonecode) VALUES (196, 'SO', 'Somalia', 252);
+INSERT INTO country (id, iso, name, phonecode) VALUES (197, 'ZA', 'South Africa', 27);
+INSERT INTO country (id, iso, name, phonecode) VALUES (198, 'GS', 'South Georgia and the South Sandwich Islands', 0);
+INSERT INTO country (id, iso, name, phonecode) VALUES (199, 'ES', 'Spain', 34);
+INSERT INTO country (id, iso, name, phonecode) VALUES (200, 'LK', 'Sri Lanka', 94);
+INSERT INTO country (id, iso, name, phonecode) VALUES (201, 'SD', 'Sudan', 249);
+INSERT INTO country (id, iso, name, phonecode) VALUES (202, 'SR', 'Suriname', 597);
+INSERT INTO country (id, iso, name, phonecode) VALUES (203, 'SJ', 'Svalbard and Jan Mayen', 47);
+INSERT INTO country (id, iso, name, phonecode) VALUES (204, 'SZ', 'Swaziland', 268);
+INSERT INTO country (id, iso, name, phonecode) VALUES (205, 'SE', 'Sweden', 46);
+INSERT INTO country (id, iso, name, phonecode) VALUES (206, 'CH', 'Switzerland', 41);
+INSERT INTO country (id, iso, name, phonecode) VALUES (207, 'SY', 'Syrian Arab Republic', 963);
+INSERT INTO country (id, iso, name, phonecode) VALUES (208, 'TW', 'Taiwan, Province of China', 886);
+INSERT INTO country (id, iso, name, phonecode) VALUES (209, 'TJ', 'Tajikistan', 992);
+INSERT INTO country (id, iso, name, phonecode) VALUES (210, 'TZ', 'Tanzania, United Republic of', 255);
+INSERT INTO country (id, iso, name, phonecode) VALUES (211, 'TH', 'Thailand', 66);
+INSERT INTO country (id, iso, name, phonecode) VALUES (212, 'TL', 'Timor-Leste', 670);
+INSERT INTO country (id, iso, name, phonecode) VALUES (213, 'TG', 'Togo', 228);
+INSERT INTO country (id, iso, name, phonecode) VALUES (214, 'TK', 'Tokelau', 690);
+INSERT INTO country (id, iso, name, phonecode) VALUES (215, 'TO', 'Tonga', 676);
+INSERT INTO country (id, iso, name, phonecode) VALUES (216, 'TT', 'Trinidad and Tobago', 1868);
+INSERT INTO country (id, iso, name, phonecode) VALUES (217, 'TN', 'Tunisia', 216);
+INSERT INTO country (id, iso, name, phonecode) VALUES (218, 'TR', 'Turkey', 90);
+INSERT INTO country (id, iso, name, phonecode) VALUES (219, 'TM', 'Turkmenistan', 7370);
+INSERT INTO country (id, iso, name, phonecode) VALUES (220, 'TC', 'Turks and Caicos Islands', 1649);
+INSERT INTO country (id, iso, name, phonecode) VALUES (221, 'TV', 'Tuvalu', 688);
+INSERT INTO country (id, iso, name, phonecode) VALUES (222, 'UG', 'Uganda', 256);
+INSERT INTO country (id, iso, name, phonecode) VALUES (223, 'UA', 'Ukraine', 380);
+INSERT INTO country (id, iso, name, phonecode) VALUES (224, 'AE', 'United Arab Emirates', 971);
+INSERT INTO country (id, iso, name, phonecode) VALUES (225, 'GB', 'United Kingdom', 44);
+INSERT INTO country (id, iso, name, phonecode) VALUES (226, 'US', 'United States', 1);
+INSERT INTO country (id, iso, name, phonecode) VALUES (227, 'UM', 'United States Minor Outlying Islands', 1);
+INSERT INTO country (id, iso, name, phonecode) VALUES (228, 'UY', 'Uruguay', 598);
+INSERT INTO country (id, iso, name, phonecode) VALUES (229, 'UZ', 'Uzbekistan', 998);
+INSERT INTO country (id, iso, name, phonecode) VALUES (230, 'VU', 'Vanuatu', 678);
+INSERT INTO country (id, iso, name, phonecode) VALUES (231, 'VE', 'Venezuela', 58);
+INSERT INTO country (id, iso, name, phonecode) VALUES (232, 'VN', 'Viet Nam', 84);
+INSERT INTO country (id, iso, name, phonecode) VALUES (233, 'VG', 'Virgin Islands, British', 1284);
+INSERT INTO country (id, iso, name, phonecode) VALUES (234, 'VI', 'Virgin Islands, U.s.', 1340);
+INSERT INTO country (id, iso, name, phonecode) VALUES (235, 'WF', 'Wallis and Futuna', 681);
+INSERT INTO country (id, iso, name, phonecode) VALUES (236, 'EH', 'Western Sahara', 212);
+INSERT INTO country (id, iso, name, phonecode) VALUES (237, 'YE', 'Yemen', 967);
+INSERT INTO country (id, iso, name, phonecode) VALUES (238, 'ZM', 'Zambia', 260);
+INSERT INTO country (id, iso, name, phonecode) VALUES (239, 'ZW', 'Zimbabwe', 263);
