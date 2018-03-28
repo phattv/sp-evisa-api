@@ -26,6 +26,7 @@ module.exports = app => {
       .send('evisa-vn.com API server, environment: ' + process.env.NODE_ENV),
   );
 
+  // TODO: split to countries.js
   app.get('/countries', (req, res, next) => {
     return knex
       .select()
@@ -56,6 +57,7 @@ module.exports = app => {
       .catch(err => logErrors(err, next));
   });
 
+  // TODO: split to fees.js
   app.get('/fees', (req, res, next) => {
     return knex
       .select(
@@ -116,6 +118,7 @@ module.exports = app => {
   });
 };
 
+// TODO: split to utils.js
 function returnBadRequest(res, message) {
   return res.status(400).send(message || 'Bad request');
 }
