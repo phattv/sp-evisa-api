@@ -1,21 +1,16 @@
 const Knex = require('knex');
 const psqlConfigs = require('./config');
 const tables = require('./tables.json');
-
 const knex = connect();
 
 function connect() {
+  const isProduction = process.env.NODE_ENV === 'production';
   const config = {
     user: process.env.SQL_USER || psqlConfigs.SQL_USER,
     password: process.env.SQL_PASSWORD || psqlConfigs.SQL_PASSWORD,
     database: process.env.SQL_DATABASE || psqlConfigs.SQL_DATABASE,
+    host: isProduction ? '10.148.0.2' : '127.0.0.1',
   };
-
-  if (process.env.NODE_ENV === 'production') {
-    config.host = '10.148.0.2';
-  } else {
-    config.host = '127.0.0.1';
-  }
 
   // Connect to the database
   return Knex({
