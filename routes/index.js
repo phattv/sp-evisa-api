@@ -26,7 +26,7 @@ module.exports = app => {
       .send('evisa-vn.com API server, environment: ' + process.env.NODE_ENV),
   );
 
-  // TODO: split to countries.js
+  //<editor-fold desc="Split to countries.js">
   app.get('/countries', (req, res, next) => {
     return knex
       .select()
@@ -48,16 +48,18 @@ module.exports = app => {
       .select()
       .from(tables.country)
       .where('id', req.params.id)
-      .then(countries => {
+      .first()
+      .then(country => {
         res
           .status(200)
-          .send((countries || [])[0])
+          .send(country)
           .end();
       })
       .catch(err => logErrors(err, next));
   });
+  //</editor-fold>
 
-  // TODO: split to fees.js
+  //<editor-fold desc="Split to fees.js">
   app.get('/fees', (req, res, next) => {
     return knex
       .select(
@@ -84,10 +86,78 @@ module.exports = app => {
       .catch(err => logErrors(err, next));
   });
 
+  app.get('/fees/:id', (req, res, next) => {
+    if (Object.keys(req.params).length === 0) {
+      return returnBadRequest(res, 'invalid params');
+    }
+    return knex
+      .select()
+      .from(tables.fee)
+      .where('id', req.params.id)
+      .first()
+      .then(fee => {
+        res
+          .status(200)
+          .send(fee)
+          .end();
+      })
+      .catch(err => logErrors(err, next));
+  });
+
+  app.put('/fees/:id', (req, res, next) => {
+    if (Object.keys(req.body).length === 0) {
+      return returnBadRequest(res, 'invalid params');
+    }
+
+    let {
+      country_id,
+      type,
+      one_month_single = 0,
+      one_month_multiple = 0,
+      three_month_single = 0,
+      three_month_multiple = 0,
+      six_month_multiple = 0,
+      one_year_multiple = 0,
+    } = req.body;
+
+    if (!one_month_single) {
+      one_month_single = 0;
+    }
+    if (!one_month_multiple) {
+      one_month_multiple = 0;
+    }
+    if (!three_month_single) {
+      three_month_single = 0;
+    }
+    if (!three_month_multiple) {
+      three_month_multiple = 0;
+    }
+    if (!six_month_multiple) {
+      six_month_multiple = 0;
+    }
+    if (!one_year_multiple) {
+      one_year_multiple = 0;
+    }
+
+    return knex(tables.fee)
+      .where('id', req.body.id)
+      .update({
+        country_id,
+        type,
+        one_month_single,
+        one_month_multiple,
+        three_month_single,
+        three_month_multiple,
+        six_month_multiple,
+        one_year_multiple,
+      })
+      .then(fee => handlePutSuccess(res))
+      .catch(err => handleErrors(err, res));
+  });
+
   app.post('/fees', (req, res, next) => {
     const validTypes = ['tourist', 'business'];
     const fee = req.body;
-    console.log('xxx', fee);
     if (Object.keys(fee).length === 0) {
       return returnBadRequest(res);
     } else if (!fee.country_id) {
@@ -107,15 +177,11 @@ module.exports = app => {
           one_year_multiple: fee.one_year_multiple,
         })
         .into(tables.fee)
-        .then(result => {
-          res
-            .status(200)
-            .send('inserted successfully')
-            .end();
-        })
-        .catch(err => logErrors(err, next));
+        .then(result => handlePostSuccess(res))
+        .catch(err => handleErrors(err, res));
     }
   });
+  //</editor-fold>
 };
 
 // TODO: split to utils.js
@@ -123,7 +189,27 @@ function returnBadRequest(res, message) {
   return res.status(400).send(message || 'Bad request');
 }
 
-function logErrors(err, next) {
-  console.error('xxx ERROR!', err.stack);
-  next(err);
+function handlePutSuccess(res) {
+  return res
+    .status(200)
+    .send({ message: 'updated successfully' })
+    .end();
+}
+
+function handlePostSuccess(res) {
+  return res
+    .status(200)
+    .send({ message: 'inserted successfully' })
+    .end();
+}
+
+function handleErrors(err, res) {
+  console.error('xxx ERROR!', err);
+  res
+    .status(400)
+    .send({
+      error: err,
+      message: err.stack,
+    })
+    .end();
 }
