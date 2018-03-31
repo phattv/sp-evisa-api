@@ -37,7 +37,7 @@ module.exports = app => {
           .send(countries)
           .end();
       })
-      .catch(err => logErrors(err, next));
+      .catch(err => handleErrors(err, res));
   });
 
   app.get('/countries/:id', (req, res, next) => {
@@ -55,7 +55,7 @@ module.exports = app => {
           .send(country)
           .end();
       })
-      .catch(err => logErrors(err, next));
+      .catch(err => handleErrors(err, res));
   });
   //</editor-fold>
 
@@ -83,7 +83,7 @@ module.exports = app => {
           .send(fees)
           .end();
       })
-      .catch(err => logErrors(err, next));
+      .catch(err => handleErrors(err, res));
   });
 
   app.get('/fees/:id', (req, res, next) => {
@@ -101,7 +101,7 @@ module.exports = app => {
           .send(fee)
           .end();
       })
-      .catch(err => logErrors(err, next));
+      .catch(err => handleErrors(err, res));
   });
 
   app.put('/fees/:id', (req, res, next) => {
@@ -177,16 +177,29 @@ module.exports = app => {
           one_year_multiple: fee.one_year_multiple,
         })
         .into(tables.fee)
-        .then(result => handlePostSuccess(res))
+        .then(fee => handlePostSuccess(res))
         .catch(err => handleErrors(err, res));
     }
+  });
+
+  app.delete('/fees/:id', (req, res, next) => {
+    if (Object.keys(req.params).length === 0) {
+      return returnBadRequest(res, 'invalid params');
+    }
+
+    return knex
+      .delete()
+      .from(tables.fee)
+      .where('id', req.params.id)
+      .then(fee => handleDeleteSucces(res))
+      .catch(err => handleErrors(err, res));
   });
   //</editor-fold>
 };
 
 // TODO: split to utils.js
 function returnBadRequest(res, message) {
-  return res.status(400).send(message || 'Bad request');
+  return res.status(400).send(message || 'bad request');
 }
 
 function handlePutSuccess(res) {
@@ -203,8 +216,15 @@ function handlePostSuccess(res) {
     .end();
 }
 
+function handleDeleteSucces(res) {
+  return res
+    .status(200)
+    .send({ message: 'deleted successfully' })
+    .end();
+}
+
 function handleErrors(err, res) {
-  console.error('xxx ERROR!', err);
+  console.log('xxx ERROR!', err);
   res
     .status(400)
     .send({
