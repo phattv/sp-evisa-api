@@ -95,6 +95,23 @@ module.exports = app => {
       .from(tables.fee)
       .where('id', req.params.id)
       .first()
+      .then(fees => {
+        res
+          .status(200)
+          .send(fees)
+          .end();
+      })
+      .catch(err => handleErrors(err, res));
+  });
+
+  app.get('/fees-by-country/:id', (req, res, next) => {
+    if (Object.keys(req.params).length === 0) {
+      return returnBadRequest(res, 'invalid params');
+    }
+    return knex
+      .select()
+      .from(tables.fee)
+      .where('country_id', req.params.id)
       .then(fee => {
         res
           .status(200)
