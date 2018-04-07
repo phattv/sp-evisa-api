@@ -4,9 +4,8 @@
   "description": "api for evisa-vn.com",
   "main": "index.js",
   "scripts": {
-    "start": "node server.js",
-    "start:dev": "export NODE_ENV=local && nodemon server.js",
-    "start:prod": "export NODE_ENV=production && yarn start",
+    "start": "export NODE_ENV=developent && nodemon server.js",
+    "start:prod": "export NODE_ENV=production && node server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Phat Tran",
