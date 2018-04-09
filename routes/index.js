@@ -4,6 +4,8 @@ const knex = connect();
 
 const { configCountryApis } = require('./countries');
 const { configFeeApis } = require('./fees');
+const { configUserApis } = require('./users');
+const { configAuthApis } = require('./auth');
 
 function connect() {
   const isProduction = process.env.NODE_ENV === 'production';
@@ -30,4 +32,6 @@ module.exports = app => {
 
   configCountryApis(app, knex);
   configFeeApis(app, knex);
+  configUserApis(app, knex);
+  configAuthApis(app, knex);
 };
