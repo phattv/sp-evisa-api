@@ -1,6 +1,6 @@
 {
   "country": "country",
-  "customer": "customer",
+  "user": "user_evisa",
   "fee": "fee",
   "order": "order"
 }
