@@ -108,24 +108,24 @@ const configFeeApis = (app, knex) => {
 
   app.post('/fees', (req, res, next) => {
     const validTypes = ['tourist', 'business'];
-    const fee = req.body;
-    if (Object.keys(fee).length === 0) {
+    const requestBody = req.body;
+    if (Object.keys(requestBody).length === 0) {
       return handleBadRequest(res);
-    } else if (!fee.country_id) {
+    } else if (!requestBody.country_id) {
       return handleBadRequest(res, 'invalid "country_id"');
-    } else if (!fee.type || !validTypes.includes(fee.type)) {
+    } else if (!requestBody.type || !validTypes.includes(requestBody.type)) {
       return handleBadRequest(res, 'invalid "type"');
     } else {
       return knex
         .insert({
-          country_id: fee.country_id,
-          type: fee.type,
-          one_month_single: fee.one_month_single,
-          one_month_multiple: fee.one_month_multiple,
-          three_month_single: fee.three_month_single,
-          three_month_multiple: fee.three_month_multiple,
-          six_month_multiple: fee.six_month_multiple,
-          one_year_multiple: fee.one_year_multiple
+          country_id: requestBody.country_id,
+          type: requestBody.type,
+          one_month_single: requestBody.one_month_single,
+          one_month_multiple: requestBody.one_month_multiple,
+          three_month_single: requestBody.three_month_single,
+          three_month_multiple: requestBody.three_month_multiple,
+          six_month_multiple: requestBody.six_month_multiple,
+          one_year_multiple: requestBody.one_year_multiple
         })
         .into(tables.fee)
         .then(fee => handlePostSuccess(res))
