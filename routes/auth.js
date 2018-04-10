@@ -24,12 +24,12 @@ const configAuthApis = (app, knex) => {
             return handleBadRequest(res, 'email exists');
           } else {
             const salt = bcrypt.genSaltSync();
-            const hash = bcrypt.hashSync(req.body.password, salt);
+            const hashedPassword = bcrypt.hashSync(req.body.password, salt);
 
             return knex
               .insert({
                 email: requestBody.email,
-                password: hash,
+                password: hashedPassword,
                 name: requestBody.name,
                 gender: requestBody.gender,
                 phone: requestBody.phone,
@@ -40,7 +40,7 @@ const configAuthApis = (app, knex) => {
                 is_admin: false,
               })
               .into(tables.user)
-              .then(user => handlePostSuccess(user))
+              .then(user => handlePostSuccess(res, user))
               .catch(err => handleErrors(err, res));
           }
         })
@@ -50,28 +50,38 @@ const configAuthApis = (app, knex) => {
 
   app.post('/login', (req, res, next) => {
     const requestBody = req.body;
+
     if (Object.keys(requestBody).length === 0) {
       return handleBadRequest(res);
     } else {
       knex
-        .select(visibleFields)
+        .select()
         .from(tables.user)
         .where('email', requestBody.email)
         .first()
         .then(user => {
-          const isPasswordCorrect = bcrypt.compareSync(
-            requestBody.password,
-            user.password,
-          );
-          if (user && isPasswordCorrect) {
-            return handleGetSuccess(res, user);
+          if (!user) {
+            return handleBadRequest(res, 'Incorrect email or password');
           } else {
-            return handleBadRequest(res, 'incorrect email or password');
+            const isPasswordCorrect = bcrypt.compareSync(
+              requestBody.password,
+              user.password,
+            );
+            if (user && isPasswordCorrect) {
+              const responseData = {};
+              visibleFields.forEach(
+                visibleField =>
+                  (responseData[visibleField] = user[visibleField]),
+              );
+              return handleGetSuccess(res, responseData);
+            }
           }
         })
         .catch(err => handleErrors(err, res));
     }
   });
+
+  // TODO: /reset
 };
 
 module.exports = { configAuthApis };
