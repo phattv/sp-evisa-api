@@ -102,7 +102,7 @@ const configFeeApis = (app, knex) => {
         six_month_multiple,
         one_year_multiple
       })
-      .then(fee => handlePutSuccess(res))
+      .then(fee => handlePutSuccess(res, fee))
       .catch(err => handleErrors(err, res));
   });
 
@@ -128,7 +128,7 @@ const configFeeApis = (app, knex) => {
           one_year_multiple: requestBody.one_year_multiple
         })
         .into(tables.fee)
-        .then(fee => handlePostSuccess(res))
+        .then(fee => handlePostSuccess(res, fee))
         .catch(err => handleErrors(err, res));
     }
   });
@@ -142,7 +142,7 @@ const configFeeApis = (app, knex) => {
       .delete()
       .from(tables.fee)
       .where('id', req.params.id)
-      .then(fee => handleDeleteSuccess(res))
+      .then(fee => handleDeleteSuccess(res, fee))
       .catch(err => handleErrors(err, res));
   });
 };

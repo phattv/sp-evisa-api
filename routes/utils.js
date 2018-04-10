@@ -5,29 +5,29 @@ function handleGetSuccess(res, data) {
     .end();
 }
 
-function handlePutSuccess(res) {
+function handlePutSuccess(res, data) {
   return res
     .status(200)
-    .send({ message: 'Updated Successfully' })
+    .send({ message: 'Updated Successfully', data })
     .end();
 }
 
-function handlePostSuccess(res) {
+function handlePostSuccess(res, data) {
   return res
     .status(200)
-    .send({ message: 'Inserted Successfully' })
+    .send({ message: 'Inserted Successfully', data })
     .end();
 }
 
-function handleDeleteSuccess(res) {
+function handleDeleteSuccess(res, data) {
   return res
     .status(200)
-    .send({ message: 'Deleted Successfully' })
+    .send({ message: 'Deleted Successfully', data })
     .end();
 }
 
 function handleBadRequest(res, message) {
-  return res.status(400).send(message || 'Bad Request');
+  return res.status(400).send({ message: message || 'Bad Request' });
 }
 
 function handleErrors(err, res) {
@@ -36,7 +36,7 @@ function handleErrors(err, res) {
     .status(400)
     .send({
       error: err,
-      message: err.detail || err.stack
+      message: err.detail || err.stack,
     })
     .end();
 }
@@ -47,5 +47,5 @@ module.exports = {
   handleErrors,
   handlePutSuccess,
   handlePostSuccess,
-  handleDeleteSuccess
+  handleDeleteSuccess,
 };
