@@ -4,6 +4,7 @@ const {
   handleBadRequest,
   handleGetSuccess,
   handlePostSuccess,
+  parseParams,
 } = require('./utils');
 const tables = require('../tables.json');
 const { visibleFields } = require('./users');
@@ -26,17 +27,20 @@ const configAuthApis = (app, knex) => {
             const salt = bcrypt.genSaltSync();
             const hashedPassword = bcrypt.hashSync(req.body.password, salt);
 
+            const parsedParams = parseParams(requestBody);
+            console.log('xxx', parsedParams);
+
             return knex
               .insert({
-                email: requestBody.email,
+                email: parsedParams.email,
                 password: hashedPassword,
-                name: requestBody.name,
-                gender: requestBody.gender,
-                phone: requestBody.phone,
-                country_id: requestBody.country_id,
-                passport: requestBody.passport,
-                passport_expiry: requestBody.passport_expiry,
-                birthday: requestBody.birthday,
+                name: parsedParams.name,
+                gender: parsedParams.gender,
+                phone: parsedParams.phone,
+                country_id: parsedParams.country_id,
+                passport: parsedParams.passport,
+                passport_expiry: parsedParams.passport_expiry,
+                birthday: parsedParams.birthday,
                 is_admin: false,
               })
               .into(tables.user)

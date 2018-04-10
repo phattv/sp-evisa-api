@@ -27,7 +27,9 @@ function handleDeleteSuccess(res, data) {
 }
 
 function handleBadRequest(res, message) {
-  return res.status(400).send({ message: message || 'Bad Request' });
+  return res
+    .status(400)
+    .send({ error: 'error', message: message || 'Bad Request' });
 }
 
 function handleErrors(err, res) {
@@ -41,6 +43,18 @@ function handleErrors(err, res) {
     .end();
 }
 
+function parseParams(params) {
+  for (let key in params) {
+    if (params.hasOwnProperty(key)) {
+      if (params[key] === '' || params[key] === undefined) {
+        params[key] = null;
+      }
+    }
+  }
+
+  return params;
+}
+
 module.exports = {
   handleGetSuccess,
   handleBadRequest,
@@ -48,4 +62,5 @@ module.exports = {
   handlePutSuccess,
   handlePostSuccess,
   handleDeleteSuccess,
+  parseParams,
 };

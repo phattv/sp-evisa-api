@@ -10,7 +10,7 @@ create table if not exists user_evisa (
   country_id int references country(id),
   passport char(39),
   passport_expiry char(30),
-  birthday timestamp,
+  birthday date,
   is_admin boolean default(false),
   primary key (id)
 );
