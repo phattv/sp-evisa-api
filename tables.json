@@ -2,5 +2,6 @@
   "country": "country",
   "user": "user_evisa",
   "fee": "fee",
-  "order": "order"
+  "order": "order",
+  "feedback": "feedback"
 }
