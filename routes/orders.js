@@ -9,7 +9,12 @@ const tables = require('../tables.json');
 
 const configOrderApis = (app, knex) => {
   app.get('/orders', (req, res, next) => {
-    const knexQuery = knex.select().from(tables.order);
+    const knexQuery = knex
+      .select()
+      .from(tables.order)
+      .whereNot({
+        status: 'hidden',
+      });
 
     // Query
     const requestQuery = req.query;
