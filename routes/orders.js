@@ -3,15 +3,26 @@ const {
   handleBadRequest,
   handleGetSuccess,
   handlePutSuccess,
-  handlePostSuccess
+  handlePostSuccess,
 } = require('./utils');
 const tables = require('../tables.json');
 
 const configOrderApis = (app, knex) => {
   app.get('/orders', (req, res, next) => {
-    return knex
-      .select()
-      .from(tables.order)
+    const knexQuery = knex.select().from(tables.order);
+
+    // Query
+    const requestQuery = req.query;
+    if (requestQuery.status) {
+      knexQuery.where({
+        status: requestQuery.status,
+      });
+    }
+    if (requestQuery._sort) {
+      knexQuery.orderBy(requestQuery._sort, requestQuery._order);
+    }
+
+    return knexQuery
       .then(orders => handleGetSuccess(res, orders))
       .catch(err => handleErrors(err, res));
   });
