@@ -27,6 +27,7 @@ const configFeedbackApis = (app, knex) => {
           phone: requestBody.phone,
           subject: requestBody.subject,
           message: requestBody.message,
+          created_at: new Date()
         })
         .into(tables.feedback)
         .then(fee => handlePostSuccess(res, fee))

@@ -68,6 +68,7 @@ const configOrderApis = (app, knex) => {
           applicants: requestBody.applicants,
           flight_number: requestBody.flight_number,
           status: 'unpaid',
+          created_at: new Date(),
         })
         .into(tables.order)
         .then(fee => handlePostSuccess(res, fee))
@@ -98,7 +99,6 @@ const configOrderApis = (app, knex) => {
       flight_number,
       status,
     } = req.body;
-    console.log('xxx', req.body);
 
     return knex(tables.order)
       .where('id', req.body.id)
@@ -119,6 +119,7 @@ const configOrderApis = (app, knex) => {
         applicants,
         flight_number,
         status,
+        updated_at: new Date(),
       })
       .then(order => handlePutSuccess(res, order))
       .catch(err => handleErrors(err, res));

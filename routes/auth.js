@@ -28,7 +28,6 @@ const configAuthApis = (app, knex) => {
             const hashedPassword = bcrypt.hashSync(req.body.password, salt);
 
             const parsedParams = parseParams(requestBody);
-            console.log('xxx', parsedParams);
 
             return knex
               .insert({
@@ -42,6 +41,7 @@ const configAuthApis = (app, knex) => {
                 passport_expiry: parsedParams.passport_expiry,
                 birthday: parsedParams.birthday,
                 is_admin: false,
+                created_at: new Date()
               })
               .into(tables.user)
               .then(user => handlePostSuccess(res, user))
