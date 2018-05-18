@@ -12,5 +12,6 @@ create table if not exists user_evisa (
   passport_expiry char(30),
   birthday date,
   is_admin boolean default(false),
+  created_at timestamp,
   primary key (id)
 );

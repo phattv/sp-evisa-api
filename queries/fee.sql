@@ -11,5 +11,6 @@ create table if not exists fee (
   six_month_multiple int default(0),
   one_year_multiple int default(0),
   primary key (id),
+  created_at timestamp,
   unique(country_id, type)
 );

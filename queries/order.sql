@@ -4,6 +4,8 @@ create table if not exists order_evisa (
   id serial not null,
   price int not null,
   status varchar(20) not null default 'unpaid',
+  created_at timestamp,
+  updated_at timestamp,
 
   country_id int references country(id),
   quantity int,
