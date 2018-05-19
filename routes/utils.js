@@ -55,6 +55,22 @@ function parseParams(params) {
   return params;
 }
 
+function attachSearchSortPaginationFilter(knexQuery, requestQuery) {
+  // sort
+  if (requestQuery._sort) {
+    knexQuery.orderBy(requestQuery._sort, requestQuery._order);
+  }
+
+  // pagination
+  if (requestQuery._start && requestQuery._end) {
+    const offset = parseInt(requestQuery._start);
+    const limit = parseInt(requestQuery._end) - parseInt(requestQuery._start);
+    knexQuery.offset(offset).limit(limit);
+  }
+
+  return knexQuery;
+}
+
 module.exports = {
   handleGetSuccess,
   handleBadRequest,
@@ -63,4 +79,5 @@ module.exports = {
   handlePostSuccess,
   handleDeleteSuccess,
   parseParams,
+  attachSearchSortPaginationFilter,
 };
