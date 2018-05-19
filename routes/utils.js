@@ -55,7 +55,7 @@ function parseParams(params) {
   return params;
 }
 
-function attachSearchSortPaginationFilter(knexQuery, requestQuery) {
+function attachSortPagination(knexQuery, requestQuery) {
   // sort
   if (requestQuery._sort) {
     knexQuery.orderBy(requestQuery._sort, requestQuery._order);
@@ -79,5 +79,5 @@ module.exports = {
   handlePostSuccess,
   handleDeleteSuccess,
   parseParams,
-  attachSearchSortPaginationFilter,
+  attachSortPagination,
 };

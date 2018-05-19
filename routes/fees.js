@@ -5,7 +5,7 @@ const {
   handlePutSuccess,
   handleDeleteSuccess,
   handlePostSuccess,
-  attachSearchSortPaginationFilter,
+  attachSortPagination,
 } = require('./utils');
 const tables = require('../tables.json');
 
@@ -32,7 +32,7 @@ const configFeeApis = (app, knex) => {
 
     const requestQuery = req.query;
 
-    attachSearchSortPaginationFilter(knexQuery, requestQuery);
+    attachSortPagination(knexQuery, requestQuery);
 
     return Promise.all([knexQuery, countQuery])
       .then((data) => {

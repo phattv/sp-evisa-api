@@ -4,6 +4,7 @@ const {
   handleGetSuccess,
   handlePutSuccess,
   handlePostSuccess,
+  attachSortPagination,
 } = require('./utils');
 const tables = require('../tables.json');
 
@@ -18,13 +19,11 @@ const configOrderApis = (app, knex) => {
 
     // Query
     const requestQuery = req.query;
+    attachSortPagination(knexQuery, requestQuery);
     if (requestQuery.status) {
       knexQuery.where({
         status: requestQuery.status,
       });
-    }
-    if (requestQuery._sort) {
-      knexQuery.orderBy(requestQuery._sort, requestQuery._order);
     }
 
     return knexQuery
