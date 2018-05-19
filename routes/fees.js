@@ -12,7 +12,6 @@ const tables = require('../tables.json');
 const configFeeApis = (app, knex) => {
   app.get('/fees', (req, res, next) => {
     const countQuery = knex.count('*').from(tables.fee);
-
     const knexQuery = knex
       .select(
         `${tables.country}.id as country_id`,
@@ -31,8 +30,15 @@ const configFeeApis = (app, knex) => {
       });
 
     const requestQuery = req.query;
-
     attachSortPagination(knexQuery, requestQuery);
+    if (requestQuery.type) {
+      knexQuery.where({
+        type: requestQuery.type,
+      });
+      countQuery.where({
+        type: requestQuery.type,
+      });
+    }
 
     return Promise.all([knexQuery, countQuery])
       .then((data) => {
