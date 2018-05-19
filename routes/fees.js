@@ -4,13 +4,16 @@ const {
   handleGetSuccess,
   handlePutSuccess,
   handleDeleteSuccess,
-  handlePostSuccess
+  handlePostSuccess,
+  attachSearchSortPaginationFilter,
 } = require('./utils');
 const tables = require('../tables.json');
 
 const configFeeApis = (app, knex) => {
   app.get('/fees', (req, res, next) => {
-    return knex
+    const countQuery = knex.count('*').from(tables.fee);
+
+    const knexQuery = knex
       .select(
         `${tables.country}.id as country_id`,
         `${tables.fee}.id`,
@@ -20,13 +23,25 @@ const configFeeApis = (app, knex) => {
         'three_month_single',
         'three_month_multiple',
         'six_month_multiple',
-        'one_year_multiple'
+        'one_year_multiple',
       )
       .from(tables.fee)
       .join(tables.country, function() {
         this.on(`${tables.fee}.country_id`, '=', `${tables.country}.id`);
+      });
+
+    const requestQuery = req.query;
+
+    attachSearchSortPaginationFilter(knexQuery, requestQuery);
+
+    return Promise.all([knexQuery, countQuery])
+      .then((data) => {
+        const fees = data[0]
+        const { count } = data[1][0]
+
+        res.header('X-Total-Count', count);
+        return handleGetSuccess(res, fees);
       })
-      .then(fees => handleGetSuccess(res, fees))
       .catch(err => handleErrors(err, res));
   });
 
@@ -68,7 +83,7 @@ const configFeeApis = (app, knex) => {
       three_month_single = 0,
       three_month_multiple = 0,
       six_month_multiple = 0,
-      one_year_multiple = 0
+      one_year_multiple = 0,
     } = req.body;
 
     if (!one_month_single) {
@@ -100,7 +115,7 @@ const configFeeApis = (app, knex) => {
         three_month_single,
         three_month_multiple,
         six_month_multiple,
-        one_year_multiple
+        one_year_multiple,
       })
       .then(fee => handlePutSuccess(res, fee))
       .catch(err => handleErrors(err, res));
@@ -125,7 +140,7 @@ const configFeeApis = (app, knex) => {
           three_month_single: requestBody.three_month_single,
           three_month_multiple: requestBody.three_month_multiple,
           six_month_multiple: requestBody.six_month_multiple,
-          one_year_multiple: requestBody.one_year_multiple
+          one_year_multiple: requestBody.one_year_multiple,
         })
         .into(tables.fee)
         .then(fee => handlePostSuccess(res, fee))
