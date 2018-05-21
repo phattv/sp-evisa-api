@@ -66,7 +66,7 @@ const configOrderApis = (app, knex) => {
           contact: requestBody.contact,
           applicants: requestBody.applicants,
           flight_number: requestBody.flight_number,
-          status: 'unpaid',
+          status: requestBody.status || 'unpaid',
           created_at: new Date(),
         })
         .into(tables.order)
