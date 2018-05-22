@@ -7,6 +7,7 @@ const {
   attachSortPagination,
 } = require('./utils');
 const tables = require('../tables.json');
+const dayjs = require('dayjs');
 
 const configOrderApis = (app, knex) => {
   app.get('/orders', (req, res, next) => {
@@ -38,6 +39,40 @@ const configOrderApis = (app, knex) => {
         });
       }
     });
+    // filter by day
+    if (requestQuery.created_at) {
+      const dateFormat = 'YYYY-MM-DD';
+      const endOfDay = new dayjs(requestQuery.created_at)
+        .add(1, 'day')
+        .format(dateFormat);
+
+      try {
+        knexQuery
+          .where(
+            knex.raw(
+              `created_at > to_date('${
+                requestQuery.created_at
+              }', '${dateFormat}')`,
+            ),
+          )
+          .andWhere(
+            knex.raw(`created_at < to_date('${endOfDay}', '${dateFormat}')`),
+          );
+        countQuery
+          .where(
+            knex.raw(
+              `created_at > to_date('${
+                requestQuery.created_at
+              }', '${dateFormat}')`,
+            ),
+          )
+          .andWhere(
+            knex.raw(`created_at < to_date('${endOfDay}', '${dateFormat}')`),
+          );
+      } catch (error) {
+        console.log('xxx', error);
+      }
+    }
 
     return Promise.all([knexQuery, countQuery])
       .then(data => {
