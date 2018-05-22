@@ -10,6 +10,6 @@ Add query functionality for `GET /orders`
 ### v2.0.0 (May 21th, 2018)
 - Add search sort pagination
 
-### v2.0.1 (May 21th, 2018)
+### v2.0.1 (May 23th, 2018)
 - Add knex debug mode for non-production environment(s)
 - Add count & filters for /orders
