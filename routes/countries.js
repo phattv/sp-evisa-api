@@ -14,15 +14,15 @@ const configCountryApis = (app, knex) => {
     const requestQuery = req.query;
     attachSortPagination(knexQuery, requestQuery);
     if (requestQuery.query) {
-      const queryString = requestQuery.query.toLowerCase()
-      knexQuery.whereRaw(`LOWER(name) LIKE ?`, [`%${queryString}%`])
-      countQuery.whereRaw(`LOWER(name) LIKE ?`, [`%${queryString}%`])
+      const queryString = requestQuery.query.toLowerCase();
+      knexQuery.whereRaw(`LOWER(name) LIKE ?`, [`%${queryString}%`]);
+      countQuery.whereRaw(`LOWER(name) LIKE ?`, [`%${queryString}%`]);
     }
 
     return Promise.all([knexQuery, countQuery])
-      .then((data) => {
-        const fees = data[0]
-        const { count } = data[1][0]
+      .then(data => {
+        const fees = data[0];
+        const { count } = data[1][0];
 
         res.header('X-Total-Count', count);
         return handleGetSuccess(res, fees);
