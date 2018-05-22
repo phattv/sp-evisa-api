@@ -10,6 +10,12 @@ const tables = require('../tables.json');
 
 const configOrderApis = (app, knex) => {
   app.get('/orders', (req, res, next) => {
+    const countQuery = knex
+      .count('*')
+      .from(tables.order)
+      .whereNot({
+        status: 'hidden',
+      });
     const knexQuery = knex
       .select()
       .from(tables.order)
@@ -19,15 +25,28 @@ const configOrderApis = (app, knex) => {
 
     // Query
     const requestQuery = req.query;
+    console.log('xxx', requestQuery);
     attachSortPagination(knexQuery, requestQuery);
-    if (requestQuery.status) {
-      knexQuery.where({
-        status: requestQuery.status,
-      });
-    }
+    const filterableFields = ['status', 'type', 'purpose'];
+    filterableFields.forEach(filterableField => {
+      if (requestQuery.hasOwnProperty(filterableField)) {
+        knexQuery.where({
+          [filterableField]: requestQuery[filterableField],
+        });
+        countQuery.where({
+          [filterableField]: requestQuery[filterableField],
+        });
+      }
+    });
 
-    return knexQuery
-      .then(orders => handleGetSuccess(res, orders))
+    return Promise.all([knexQuery, countQuery])
+      .then(data => {
+        const orders = data[0];
+        const { count } = data[1][0];
+
+        res.header('X-Total-Count', count);
+        return handleGetSuccess(res, orders);
+      })
       .catch(err => handleErrors(err, res));
   });
 
