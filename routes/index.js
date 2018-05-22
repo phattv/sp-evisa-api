@@ -15,13 +15,14 @@ function connect() {
     user: process.env.SQL_USER || psqlConfigs.SQL_USER,
     password: process.env.SQL_PASSWORD || psqlConfigs.SQL_PASSWORD,
     database: process.env.SQL_DATABASE || psqlConfigs.SQL_DATABASE,
-    host: isProduction ? '10.148.0.2' : '127.0.0.1'
+    host: isProduction ? '10.148.0.2' : '127.0.0.1',
   };
 
   // Connect to the database
   return Knex({
     client: 'pg',
-    connection: config
+    connection: config,
+    debug: !isProduction,
   });
 }
 
@@ -29,7 +30,7 @@ module.exports = app => {
   app.get('/', (req, res) =>
     res
       .status(200)
-      .send('evisa-vn.com API server, environment: ' + process.env.NODE_ENV)
+      .send('evisa-vn.com API server, environment: ' + process.env.NODE_ENV),
   );
 
   configCountryApis(app, knex);
