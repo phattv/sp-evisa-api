@@ -8,6 +8,7 @@ const {
 } = require('./utils');
 const tables = require('../tables.json');
 const dayjs = require('dayjs');
+const mailer = require('../mailer');
 const { dateFormat, postgresDateFormat } = require('./constants');
 
 const configOrderApis = (app, knex) => {
@@ -102,6 +103,8 @@ const configOrderApis = (app, knex) => {
     if (Object.keys(requestBody).length === 0) {
       return handleBadRequest(res);
     } else {
+      // send email
+      mailer.sendSuccessOrderEmail(requestBody);
 
       const arrivalDate = requestBody.arrival_date
         ? dayjs(requestBody.arrival_date).format(postgresDateFormat)
