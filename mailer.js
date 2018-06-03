@@ -12,20 +12,31 @@ const transporter = nodemailer.createTransport({
     pass: 'Ev!s@-vn.COM',
   },
 });
+const borderStyles = 'border:1px solid #D6D9DF;';
+const tdStyle = `padding: 5px; ${borderStyles}`;
 
 const sendSuccessOrderEmail = requestBody => {
   let contact = {};
+  let applicants = [];
   try {
     contact = JSON.parse(requestBody.contact);
+    applicants = JSON.parse(requestBody.applicants);
   } catch (e) {
-    console.log('xxx', 'cannot parse requestBody.contact');
+    console.log(
+      'xxx',
+      'cannot parse requestBody.contact or requestBody.applicants',
+    );
   }
 
   fs.readFile('./emails/success-order.html', 'utf8', (error, template) => {
     const visaOptionsHtml = prepareVisaOptionsHtml(requestBody);
+    const applicantsHtml = prepareApplicantsHtml(applicants);
+    const contactHtml = prepareContactHtml(contact);
     const templateWithData = template
       .replace('${customer}', contact.name)
-      .replace('${visa_options}', visaOptionsHtml);
+      .replace('${visa_options}', visaOptionsHtml)
+      .replace('${applicant_details}', applicantsHtml)
+      .replace('${contact_information}', contactHtml);
 
     let mailOptions = {
       from: fromAddress,
@@ -38,24 +49,20 @@ const sendSuccessOrderEmail = requestBody => {
     // send mail with defined transport object
     transporter.sendMail(mailOptions, (error, info) => {
       if (error) {
-        return console.log('XXX mailer ERROR: ', error);
+        return console.log('xxx mailer ERROR: ', error);
       }
       console.log('Message sent: ', info.messageId);
     });
   });
 };
 
-const prepareVisaOptionsHtml = (requestBody) => {
-  const borderStyles = 'border:1px solid #D6D9DF;'
-  const tdStyle = `padding: 5px;  ${borderStyles}`
-
-  // TODO: country name
-
+// TODO: bind options: processing_time, country_id
+const prepareVisaOptionsHtml = requestBody => {
   return `
 <table width="400" border="0" style="${borderStyles}">
   <tr>
     <td style="${tdStyle}">Type of visa</td>
-    <td style="${tdStyle}">${requestBody.type}</td>
+    <td style="${tdStyle}">${requestBody.type.replace(/_/g, ' ')}</td>
   </tr>
   <tr>
     <td style="${tdStyle}">Country</td>
@@ -90,8 +97,58 @@ const prepareVisaOptionsHtml = (requestBody) => {
     <td style="${tdStyle}"><strong>${requestBody.price}</strong></td>
   </tr>
 </table>    
-    `;
+`;
 };
+
+const prepareApplicantsHtml = applicants => {
+  let htmlString = `
+<table width="400" border="0" style="${borderStyles}">
+  <tr>
+    <td style="${tdStyle}">Name</td>
+    <td style="${tdStyle}">Gender</td>
+    <td style="${tdStyle}">Birthday</td>
+    <td style="${tdStyle}">Country</td>
+    <td style="${tdStyle}">Passport</td>
+    <td style="${tdStyle}">Passport expiry</td>
+  </tr>
+`;
+
+  const applicantIndexes = Object.keys(applicants);
+  if (applicantIndexes.length > 0) {
+    applicantIndexes.forEach(index => {
+      return (htmlString += `
+<tr>
+  <td style="${tdStyle}">${applicants[index].name}</td>
+  <td style="${tdStyle}">${applicants[index].gender}</td>
+  <td style="${tdStyle}">${applicants[index].birthday}</td>
+  <td style="${tdStyle}">${applicants[index].country_id}</td>
+  <td style="${tdStyle}">${applicants[index].passport}</td>
+  <td style="${tdStyle}">${applicants[index].passport_expiry}</td>
+</tr>      
+`);
+    });
+  }
+
+  htmlString += '</table>';
+  return htmlString;
+};
+
+const prepareContactHtml = contact => `
+<table width="400" border="0" style="${borderStyles}">
+  <tr>
+    <td style="${tdStyle}">Name</td>
+    <td style="${tdStyle}">${contact.name}</td>
+  </tr>
+  <tr>
+    <td style="${tdStyle}">Email</td>
+    <td style="${tdStyle}">${contact.email}</td>
+  </tr>
+  <tr>
+    <td style="${tdStyle}">Phone</td>
+    <td style="${tdStyle}">${contact.phone}</td>
+  </tr>
+</table>   
+`;
 
 module.exports = {
   sendSuccessOrderEmail,
