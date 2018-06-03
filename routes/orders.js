@@ -8,6 +8,7 @@ const {
 } = require('./utils');
 const tables = require('../tables.json');
 const dayjs = require('dayjs');
+const { dateFormat, postgresDateFormat } = require('./constants');
 
 const configOrderApis = (app, knex) => {
   app.get('/orders', (req, res, next) => {
@@ -26,7 +27,6 @@ const configOrderApis = (app, knex) => {
 
     // Query
     const requestQuery = req.query;
-    console.log('xxx', requestQuery);
     attachSortPagination(knexQuery, requestQuery);
     const filterableFields = ['status', 'type', 'purpose'];
     filterableFields.forEach(filterableField => {
@@ -41,7 +41,6 @@ const configOrderApis = (app, knex) => {
     });
     // filter by day
     if (requestQuery.created_at) {
-      const dateFormat = 'YYYY-MM-DD';
       const endOfDay = new dayjs(requestQuery.created_at)
         .add(1, 'day')
         .format(dateFormat);
@@ -103,6 +102,15 @@ const configOrderApis = (app, knex) => {
     if (Object.keys(requestBody).length === 0) {
       return handleBadRequest(res);
     } else {
+
+      const arrivalDate = requestBody.arrival_date
+        ? dayjs(requestBody.arrival_date).format(postgresDateFormat)
+        : '';
+      const departureDate = requestBody.arrival_date
+        ? dayjs(requestBody.departure_date).format(postgresDateFormat)
+        : '';
+
+      // save to db
       return knex
         .insert({
           price: requestBody.price,
@@ -112,8 +120,8 @@ const configOrderApis = (app, knex) => {
           purpose: requestBody.purpose,
           processing_time: requestBody.processing_time,
           airport: requestBody.airport,
-          arrival_date: requestBody.arrival_date,
-          departure_date: requestBody.departure_date,
+          arrival_date: arrivalDate,
+          departure_date: departureDate,
           airport_fast_track: requestBody.airport_fast_track,
           car_pick_up: requestBody.car_pick_up,
           private_visa_letter: requestBody.private_visa_letter,
