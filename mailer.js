@@ -21,13 +21,18 @@ const sendSuccessOrderEmail = requestBody => {
     console.log('xxx', 'cannot parse requestBody.contact');
   }
 
-  fs.readFile('./emails/success-order.html', (error, template) => {
+  fs.readFile('./emails/success-order.html', 'utf8', (error, template) => {
+    const visaOptionsHtml = prepareVisaOptionsHtml(requestBody);
+    const templateWithData = template
+      .replace('${customer}', contact.name)
+      .replace('${visa_options}', visaOptionsHtml);
+
     let mailOptions = {
       from: fromAddress,
       to: contact.email,
       replyTo: replyToAddress,
-      subject: 'Vietnam visa confirmation',
-      html: template,
+      subject: '[evisa-vn.com] Vietnam Visa Application Confirmation',
+      html: templateWithData,
     };
 
     // send mail with defined transport object
@@ -38,6 +43,54 @@ const sendSuccessOrderEmail = requestBody => {
       console.log('Message sent: ', info.messageId);
     });
   });
+};
+
+const prepareVisaOptionsHtml = (requestBody) => {
+  const borderStyles = 'border:1px solid #D6D9DF;'
+  const tdStyle = `padding: 5px;  ${borderStyles}`
+
+  // TODO: country name
+
+  return `
+<table width="400" border="0" style="${borderStyles}">
+  <tr>
+    <td style="${tdStyle}">Type of visa</td>
+    <td style="${tdStyle}">${requestBody.type}</td>
+  </tr>
+  <tr>
+    <td style="${tdStyle}">Country</td>
+    <td style="${tdStyle}">${requestBody.country_id}</td>
+  </tr>
+  <tr>
+    <td style="${tdStyle}">Purpose of arrival</td>
+    <td style="${tdStyle}">${requestBody.purpose}</td>
+  </tr>
+  <tr>
+    <td style="${tdStyle}">Processing time</td>
+    <td style="${tdStyle}">${requestBody.processing_time}</td>
+  </tr>
+  <tr>
+    <td style="${tdStyle}">Arrival date</td>
+    <td style="${tdStyle}">${requestBody.arrival_date}</td>
+  </tr>
+  <tr>
+    <td style="${tdStyle}">Departure date</td>
+    <td style="${tdStyle}">${requestBody.departure_date}</td>
+  </tr>
+  <tr>
+    <td style="${tdStyle}">Arrival airport</td>
+    <td style="${tdStyle}">${requestBody.airport}</td>
+  </tr>
+  <tr>
+    <td style="${tdStyle}">Number of applicants</td>
+    <td style="${tdStyle}">${requestBody.quantity}</td>
+  </tr>
+  <tr>
+    <td style="${tdStyle}"><strong>Total service charge</strong></td>
+    <td style="${tdStyle}"><strong>${requestBody.price}</strong></td>
+  </tr>
+</table>    
+    `;
 };
 
 module.exports = {
