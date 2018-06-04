@@ -1,10 +1,13 @@
 'use strict';
 const nodemailer = require('nodemailer');
 const fs = require('fs');
+const dayjs = require('dayjs');
 
 // create reusable transporter object using the default SMTP transport
-const fromAddress = '<no-reply@evisa-vn.com>';
+const fromAddress = 'no-reply@evisa-vn.com';
 const replyToAddress = 'contact@evisa-vn.com';
+// const bccAddresses = 'quanghuy@evisa-vn.com, dieu@evisa-vn.com'
+const bccAddresses = 'vanphat.tran93@gmail.com';
 const transporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {
@@ -12,8 +15,22 @@ const transporter = nodemailer.createTransport({
     pass: 'Ev!s@-vn.COM',
   },
 });
+
+// constants
+const {
+  dateFormat,
+  processingTimeOptions,
+  typeOptions,
+} = require('./constants');
+
+// CSS styles
 const borderStyles = 'border:1px solid #D6D9DF;';
-const tdStyle = `padding: 5px; ${borderStyles}`;
+const tdStyle = `
+${borderStyles}
+padding: 5px; 
+font-family:Montserrat,'Trebuchet MS','Lucida Grande','Lucida Sans Unicode','Lucida Sans',Tahoma,sans-serif;
+color:#3e3e3e
+`;
 
 const sendSuccessOrderEmail = requestBody => {
   let contact = {};
@@ -41,6 +58,7 @@ const sendSuccessOrderEmail = requestBody => {
     let mailOptions = {
       from: fromAddress,
       to: contact.email,
+      bcc: bccAddresses,
       replyTo: replyToAddress,
       subject: '[evisa-vn.com] Vietnam Visa Application Confirmation',
       html: templateWithData,
@@ -56,13 +74,21 @@ const sendSuccessOrderEmail = requestBody => {
   });
 };
 
-// TODO: bind options: processing_time, country_id
 const prepareVisaOptionsHtml = requestBody => {
+  const formattedProcessingTime =
+    processingTimeOptions[requestBody.processing_time];
+  const formattedArrivalDate = requestBody.arrival_date
+    ? dayjs(requestBody.arrival_date).format(dateFormat)
+    : '';
+  const formattedDepartureDate = requestBody.departure_date
+    ? dayjs(requestBody.departure_date).format(dateFormat)
+    : '';
+
   return `
 <table width="400" border="0" style="${borderStyles}">
   <tr>
     <td style="${tdStyle}">Type of visa</td>
-    <td style="${tdStyle}">${requestBody.type.replace(/_/g, ' ')}</td>
+    <td style="${tdStyle}">${typeOptions[requestBody.type]}</td>
   </tr>
   <tr>
     <td style="${tdStyle}">Country</td>
@@ -74,15 +100,15 @@ const prepareVisaOptionsHtml = requestBody => {
   </tr>
   <tr>
     <td style="${tdStyle}">Processing time</td>
-    <td style="${tdStyle}">${requestBody.processing_time}</td>
+    <td style="${tdStyle}">${formattedProcessingTime}</td>
   </tr>
   <tr>
     <td style="${tdStyle}">Arrival date</td>
-    <td style="${tdStyle}">${requestBody.arrival_date}</td>
+    <td style="${tdStyle}">${formattedArrivalDate}</td>
   </tr>
   <tr>
     <td style="${tdStyle}">Departure date</td>
-    <td style="${tdStyle}">${requestBody.departure_date}</td>
+    <td style="${tdStyle}">${formattedDepartureDate}</td>
   </tr>
   <tr>
     <td style="${tdStyle}">Arrival airport</td>
@@ -116,14 +142,21 @@ const prepareApplicantsHtml = applicants => {
   const applicantIndexes = Object.keys(applicants);
   if (applicantIndexes.length > 0) {
     applicantIndexes.forEach(index => {
+      const formattedBirthday = applicants[index].birthday
+        ? dayjs(applicants[index].birthday).format(dateFormat)
+        : '';
+      const formattedPassportExpiry = applicants[index].passport_expiry
+        ? dayjs(applicants[index].passport_expiry).format(dateFormat)
+        : '';
+
       return (htmlString += `
 <tr>
   <td style="${tdStyle}">${applicants[index].name}</td>
   <td style="${tdStyle}">${applicants[index].gender}</td>
-  <td style="${tdStyle}">${applicants[index].birthday}</td>
+  <td style="${tdStyle}">${formattedBirthday}</td>
   <td style="${tdStyle}">${applicants[index].country_id}</td>
   <td style="${tdStyle}">${applicants[index].passport}</td>
-  <td style="${tdStyle}">${applicants[index].passport_expiry}</td>
+  <td style="${tdStyle}">${formattedPassportExpiry}</td>
 </tr>      
 `);
     });
