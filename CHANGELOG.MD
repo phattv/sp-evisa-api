@@ -13,3 +13,7 @@ Add query functionality for `GET /orders`
 ### v2.0.1 (May 23th, 2018)
 - Add knex debug mode for non-production environment(s)
 - Add count & filters for /orders
+
+### v2.1.0 (May 23th, 2018)
+- Enhance docker build speed
+- Send confirmation email on POST /order
