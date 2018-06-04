@@ -9,7 +9,7 @@ const {
 const tables = require('../tables.json');
 const dayjs = require('dayjs');
 const mailer = require('../mailer');
-const { dateFormat, postgresDateFormat } = require('./constants');
+const { dateFormat, postgresDateFormat } = require('../constants');
 
 const configOrderApis = (app, knex) => {
   app.get('/orders', (req, res, next) => {
@@ -109,7 +109,7 @@ const configOrderApis = (app, knex) => {
       const arrivalDate = requestBody.arrival_date
         ? dayjs(requestBody.arrival_date).format(postgresDateFormat)
         : '';
-      const departureDate = requestBody.arrival_date
+      const departureDate = requestBody.departure_date
         ? dayjs(requestBody.departure_date).format(postgresDateFormat)
         : '';
 

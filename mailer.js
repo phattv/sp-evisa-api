@@ -22,14 +22,16 @@ const {
   processingTimeOptions,
   typeOptions,
 } = require('./constants');
+const countries = require('./countries');
 
 // CSS styles
 const borderStyles = 'border:1px solid #D6D9DF;';
 const tdStyle = `
 ${borderStyles}
-padding: 5px; 
+padding:5px;
+font-size:14px;
 font-family:Montserrat,'Trebuchet MS','Lucida Grande','Lucida Sans Unicode','Lucida Sans',Tahoma,sans-serif;
-color:#3e3e3e
+color:#3e3e3e;
 `;
 
 const sendSuccessOrderEmail = requestBody => {
@@ -83,6 +85,9 @@ const prepareVisaOptionsHtml = requestBody => {
   const formattedDepartureDate = requestBody.departure_date
     ? dayjs(requestBody.departure_date).format(dateFormat)
     : '';
+  const country = countries.find(
+    country => country.value === requestBody.country_id,
+  );
 
   return `
 <table width="400" border="0" style="${borderStyles}">
@@ -92,7 +97,7 @@ const prepareVisaOptionsHtml = requestBody => {
   </tr>
   <tr>
     <td style="${tdStyle}">Country</td>
-    <td style="${tdStyle}">${requestBody.country_id}</td>
+    <td style="${tdStyle}">${country.label}</td>
   </tr>
   <tr>
     <td style="${tdStyle}">Purpose of arrival</td>
@@ -148,13 +153,16 @@ const prepareApplicantsHtml = applicants => {
       const formattedPassportExpiry = applicants[index].passport_expiry
         ? dayjs(applicants[index].passport_expiry).format(dateFormat)
         : '';
+      const country = countries.find(
+        country => country.value === applicants[index].country_id,
+      );
 
       return (htmlString += `
 <tr>
   <td style="${tdStyle}">${applicants[index].name}</td>
   <td style="${tdStyle}">${applicants[index].gender}</td>
   <td style="${tdStyle}">${formattedBirthday}</td>
-  <td style="${tdStyle}">${applicants[index].country_id}</td>
+  <td style="${tdStyle}">${country.label}</td>
   <td style="${tdStyle}">${applicants[index].passport}</td>
   <td style="${tdStyle}">${formattedPassportExpiry}</td>
 </tr>      
