@@ -29,7 +29,7 @@ const configOrderApis = (app, knex) => {
     // Query
     const requestQuery = req.query;
     attachSortPagination(knexQuery, requestQuery);
-    const filterableFields = ['status', 'type', 'purpose'];
+    const filterableFields = ['status', 'type', 'purpose', 'processing_time'];
     filterableFields.forEach(filterableField => {
       if (requestQuery.hasOwnProperty(filterableField)) {
         knexQuery.where({

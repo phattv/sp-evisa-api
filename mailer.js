@@ -6,7 +6,7 @@ const dayjs = require('dayjs');
 // create reusable transporter object using the default SMTP transport
 const fromAddress = 'no-reply@evisa-vn.com';
 const replyToAddress = 'contact@evisa-vn.com';
-const bccAddresses = 'quanghuy@evisa-vn.com, dieu@evisa-vn.com'
+const bccAddresses = 'quanghuy@evisa-vn.com, dieu@evisa-vn.com';
 const transporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {
