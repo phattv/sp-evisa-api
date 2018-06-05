@@ -9,7 +9,7 @@ const {
 const tables = require('../tables.json');
 const dayjs = require('dayjs');
 const mailer = require('../mailer');
-const { dateFormat, postgresDateFormat } = require('../constants');
+const { postgresDateFormat } = require('../constants');
 
 const configOrderApis = (app, knex) => {
   app.get('/orders', (req, res, next) => {
@@ -44,7 +44,7 @@ const configOrderApis = (app, knex) => {
     if (requestQuery.created_at) {
       const endOfDay = new dayjs(requestQuery.created_at)
         .add(1, 'day')
-        .format(dateFormat);
+        .format(postgresDateFormat);
 
       try {
         knexQuery
@@ -52,22 +52,26 @@ const configOrderApis = (app, knex) => {
             knex.raw(
               `created_at > to_date('${
                 requestQuery.created_at
-              }', '${dateFormat}')`,
+              }', '${postgresDateFormat}')`,
             ),
           )
           .andWhere(
-            knex.raw(`created_at < to_date('${endOfDay}', '${dateFormat}')`),
+            knex.raw(
+              `created_at < to_date('${endOfDay}', '${postgresDateFormat}')`,
+            ),
           );
         countQuery
           .where(
             knex.raw(
               `created_at > to_date('${
                 requestQuery.created_at
-              }', '${dateFormat}')`,
+              }', '${postgresDateFormat}')`,
             ),
           )
           .andWhere(
-            knex.raw(`created_at < to_date('${endOfDay}', '${dateFormat}')`),
+            knex.raw(
+              `created_at < to_date('${endOfDay}', '${postgresDateFormat}')`,
+            ),
           );
       } catch (error) {
         console.log('xxx', error);

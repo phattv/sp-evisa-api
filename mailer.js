@@ -17,7 +17,7 @@ const transporter = nodemailer.createTransport({
 
 // constants
 const {
-  dateFormat,
+  displayDateFormat,
   processingTimeOptions,
   typeOptions,
 } = require('./constants');
@@ -79,10 +79,10 @@ const prepareVisaOptionsHtml = requestBody => {
   const formattedProcessingTime =
     processingTimeOptions[requestBody.processing_time];
   const formattedArrivalDate = requestBody.arrival_date
-    ? dayjs(requestBody.arrival_date).format(dateFormat)
+    ? dayjs(requestBody.arrival_date).format(displayDateFormat)
     : '';
   const formattedDepartureDate = requestBody.departure_date
-    ? dayjs(requestBody.departure_date).format(dateFormat)
+    ? dayjs(requestBody.departure_date).format(displayDateFormat)
     : '';
   const country = countries.find(
     country => country.value === requestBody.country_id,
@@ -147,10 +147,10 @@ const prepareApplicantsHtml = applicants => {
   if (applicantIndexes.length > 0) {
     applicantIndexes.forEach(index => {
       const formattedBirthday = applicants[index].birthday
-        ? dayjs(applicants[index].birthday).format(dateFormat)
+        ? dayjs(applicants[index].birthday).format(displayDateFormat)
         : '';
       const formattedPassportExpiry = applicants[index].passport_expiry
-        ? dayjs(applicants[index].passport_expiry).format(dateFormat)
+        ? dayjs(applicants[index].passport_expiry).format(displayDateFormat)
         : '';
       const country = countries.find(
         country => country.value === applicants[index].country_id,
