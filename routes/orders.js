@@ -89,6 +89,39 @@ const configOrderApis = (app, knex) => {
       .catch(err => handleErrors(err, res));
   });
 
+  app.get('/orders/stats', (req, res, next) => {
+    let countResults = {};
+
+    knex
+      .distinct('status')
+      .select()
+      .from(tables.order)
+      .then(statuses => {
+        let countQueries = [];
+
+        statuses.map(statusObject => {
+          countResults[statusObject.status] = 0;
+
+          countQueries.push(
+            knex
+              .count()
+              .from(tables.order)
+              .where('status', statusObject.status),
+          );
+        });
+
+        Promise.all(countQueries).then(counts => {
+          counts.map((countArray, index) => {
+            countResults[Object.keys(countResults)[index]] =
+              parseInt(countArray[0].count, 10);
+          });
+
+          return handleGetSuccess(res, countResults);
+        });
+      })
+      .catch(err => handleErrors(err, res));
+  });
+
   app.get('/orders/:id', (req, res, next) => {
     if (Object.keys(req.params).length === 0) {
       return handleBadRequest(res, 'invalid params');
