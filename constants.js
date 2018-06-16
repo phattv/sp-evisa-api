@@ -16,7 +16,7 @@ const typeOptions = {
   one_year_multiple: '1 year multiple',
 };
 const processingTimeOptions = {
-  normal: 'normal (guaranteed 2 working days)',
+  normal: 'normal (guaranteed 1 working day)',
   urgent: 'urgent (guaranteed 4-8 working hours)',
   emergency: 'emergency (guaranteed 1 working hour)',
 };
