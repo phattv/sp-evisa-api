@@ -17,3 +17,8 @@ Add query functionality for `GET /orders`
 ### v2.1.0 (June 5th, 2018)
 - Enhance docker build speed
 - Send confirmation email on POST /order
+
+### v2.1.1 (June 25th, 2018)
+- Add GET /orders/stats
+- Add GET /orders filter by processing_time
+- Fix GET /orders filter by created_at
