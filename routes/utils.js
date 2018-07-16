@@ -32,6 +32,7 @@ function handleBadRequest(res, message) {
     .send({ error: 'error', message: message || 'Bad Request' });
 }
 
+// TODO: Rollbar
 function handleErrors(err, res) {
   console.log('xxx ERROR!', err);
   res

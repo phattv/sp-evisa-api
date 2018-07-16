@@ -40,6 +40,7 @@ const sendSuccessOrderEmail = requestBody => {
     contact = JSON.parse(requestBody.contact);
     applicants = JSON.parse(requestBody.applicants);
   } catch (e) {
+    // TODO: Rollbar
     console.log(
       'xxx',
       'cannot parse requestBody.contact or requestBody.applicants',
@@ -68,9 +69,10 @@ const sendSuccessOrderEmail = requestBody => {
     // send mail with defined transport object
     transporter.sendMail(mailOptions, (error, info) => {
       if (error) {
+        // TODO: Rollbar
         return console.log('xxx mailer ERROR: ', error);
       }
-      console.log('Message sent: ', info.messageId);
+      console.log('Email sent: ', info.messageId);
     });
   });
 };

@@ -74,6 +74,7 @@ const configOrderApis = (app, knex) => {
             ),
           );
       } catch (error) {
+        // TODO: Rollbar
         console.log('xxx', error);
       }
     }
