@@ -2,6 +2,7 @@
 const nodemailer = require('nodemailer');
 const fs = require('fs');
 const dayjs = require('dayjs');
+const path = require('path');
 
 // create reusable transporter object using the default SMTP transport
 const fromAddress = 'no-reply@evisa-vn.com';
@@ -21,17 +22,19 @@ const {
   processingTimeOptions,
   typeOptions,
 } = require('./constants');
-const countries = require('./countries');
+const countries = require('./countries.json');
 
 // CSS styles
-const borderStyles = 'border:1px solid #D6D9DF;';
+const tableWidth = 600;
 const tdStyle = `
-${borderStyles}
-padding:5px;
-font-size:14px;
-font-family:Montserrat,'Trebuchet MS','Lucida Grande','Lucida Sans Unicode','Lucida Sans',Tahoma,sans-serif;
-color:#3e3e3e;
+height: 44px;
+vertical-align: middle;
+padding: 5px;
+font-size: 16px;
+font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif;
+color: #2e4255;
 `;
+const backgroundColor = 'background-color: #f2f7ff;';
 
 const sendSuccessOrderEmail = requestBody => {
   let contact = {};
@@ -64,7 +67,16 @@ const sendSuccessOrderEmail = requestBody => {
       replyTo: replyToAddress,
       subject: '[evisa-vn.com] Vietnam Visa Application Confirmation',
       html: templateWithData,
+      attachments: [
+        {
+          filename: 'logo-horizontal.jpg',
+          path: path.join(__dirname, '/emails/images/logo-horizontal.jpg'),
+          cid: 'evisaLogoHorizontalImageCID',
+        },
+      ],
     };
+
+    console.log('xxx', templateWithData);
 
     // send mail with defined transport object
     transporter.sendMail(mailOptions, (error, info) => {
@@ -91,8 +103,8 @@ const prepareVisaOptionsHtml = requestBody => {
   );
 
   return `
-<table width="400" border="0" style="${borderStyles}">
-  <tr>
+<table width="${tableWidth}" border="0">
+  <tr style="${backgroundColor}">
     <td style="${tdStyle}">Type of visa</td>
     <td style="${tdStyle}">${typeOptions[requestBody.type]}</td>
   </tr>
@@ -100,7 +112,7 @@ const prepareVisaOptionsHtml = requestBody => {
     <td style="${tdStyle}">Country</td>
     <td style="${tdStyle}">${country.label}</td>
   </tr>
-  <tr>
+  <tr style="${backgroundColor}">
     <td style="${tdStyle}">Purpose of arrival</td>
     <td style="${tdStyle}">${requestBody.purpose}</td>
   </tr>
@@ -108,7 +120,7 @@ const prepareVisaOptionsHtml = requestBody => {
     <td style="${tdStyle}">Processing time</td>
     <td style="${tdStyle}">${formattedProcessingTime}</td>
   </tr>
-  <tr>
+  <tr style="${backgroundColor}">
     <td style="${tdStyle}">Arrival date</td>
     <td style="${tdStyle}">${formattedArrivalDate}</td>
   </tr>
@@ -116,7 +128,7 @@ const prepareVisaOptionsHtml = requestBody => {
     <td style="${tdStyle}">Departure date</td>
     <td style="${tdStyle}">${formattedDepartureDate}</td>
   </tr>
-  <tr>
+  <tr style="${backgroundColor}">
     <td style="${tdStyle}">Arrival airport</td>
     <td style="${tdStyle}">${requestBody.airport}</td>
   </tr>
@@ -124,7 +136,7 @@ const prepareVisaOptionsHtml = requestBody => {
     <td style="${tdStyle}">Number of applicants</td>
     <td style="${tdStyle}">${requestBody.quantity}</td>
   </tr>
-  <tr>
+  <tr style="${backgroundColor}">
     <td style="${tdStyle}"><strong>Total service charge</strong></td>
     <td style="${tdStyle}"><strong>${requestBody.price}</strong></td>
   </tr>
@@ -134,8 +146,8 @@ const prepareVisaOptionsHtml = requestBody => {
 
 const prepareApplicantsHtml = applicants => {
   let htmlString = `
-<table width="400" border="0" style="${borderStyles}">
-  <tr>
+<table width="${tableWidth}" border="0">
+  <tr style="${backgroundColor}">
     <td style="${tdStyle}">Name</td>
     <td style="${tdStyle}">Gender</td>
     <td style="${tdStyle}">Birthday</td>
@@ -145,26 +157,28 @@ const prepareApplicantsHtml = applicants => {
   </tr>
 `;
 
-  const applicantIndexes = Object.keys(applicants);
-  if (applicantIndexes.length > 0) {
-    applicantIndexes.forEach(index => {
-      const formattedBirthday = applicants[index].birthday
-        ? dayjs(applicants[index].birthday).format(displayDateFormat)
+  if (applicants.length > 0) {
+    applicants.forEach((applicant, index) => {
+      const formattedBirthday = applicant.birthday
+        ? dayjs(applicant.birthday).format(displayDateFormat)
         : '';
-      const formattedPassportExpiry = applicants[index].passport_expiry
-        ? dayjs(applicants[index].passport_expiry).format(displayDateFormat)
+      const passportExpiry =
+        applicant.passportExpiry || applicant.passport_expiry;
+      const formattedPassportExpiry = passportExpiry
+        ? dayjs(passportExpiry).format(displayDateFormat)
         : '';
       const country = countries.find(
-        country => country.value === applicants[index].country_id,
+        country =>
+          country.value === applicant.countryId || applicant.country_id,
       );
 
       return (htmlString += `
-<tr>
-  <td style="${tdStyle}">${applicants[index].name}</td>
-  <td style="${tdStyle}">${applicants[index].gender}</td>
+${index % 2 === 0 ? `<tr>` : `<tr style="${backgroundColor}">`}
+  <td style="${tdStyle}">${applicant.name}</td>
+  <td style="${tdStyle}">${applicant.gender}</td>
   <td style="${tdStyle}">${formattedBirthday}</td>
   <td style="${tdStyle}">${country.label}</td>
-  <td style="${tdStyle}">${applicants[index].passport}</td>
+  <td style="${tdStyle}">${applicant.passport}</td>
   <td style="${tdStyle}">${formattedPassportExpiry}</td>
 </tr>      
 `);
@@ -176,8 +190,8 @@ const prepareApplicantsHtml = applicants => {
 };
 
 const prepareContactHtml = contact => `
-<table width="400" border="0" style="${borderStyles}">
-  <tr>
+<table width="${tableWidth}" border="0">
+  <tr style="${backgroundColor}">
     <td style="${tdStyle}">Name</td>
     <td style="${tdStyle}">${contact.name}</td>
   </tr>
@@ -185,7 +199,7 @@ const prepareContactHtml = contact => `
     <td style="${tdStyle}">Email</td>
     <td style="${tdStyle}">${contact.email}</td>
   </tr>
-  <tr>
+  <tr style="${backgroundColor}">
     <td style="${tdStyle}">Phone</td>
     <td style="${tdStyle}">${contact.phone}</td>
   </tr>
