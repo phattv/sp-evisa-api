@@ -1,24 +1,27 @@
-### v1.8 (May 16th, 2018)
-Add `GET /orders`, `GET /orders/:id`, `POST /order`
+## [2.2.0] - 2018-06-25
+- Update success-order email template with logo attachment
 
-### v1.9.0 (May 17th, 2018)
-Add `PUT /orders/:id`
-
-### v1.9.1 (May 17th, 2018)
-Add query functionality for `GET /orders`
-
-### v2.0.0 (May 21th, 2018)
-- Add search sort pagination
-
-### v2.0.1 (May 23th, 2018)
-- Add knex debug mode for non-production environment(s)
-- Add count & filters for /orders
-
-### v2.1.0 (June 5th, 2018)
-- Enhance docker build speed
-- Send confirmation email on POST /order
-
-### v2.1.1 (June 25th, 2018)
+## [v2.1.1] - 2018-06-25
 - Add GET /orders/stats
 - Add GET /orders filter by processing_time
 - Fix GET /orders filter by created_at
+
+## [v2.1.0] - 2018-06-05
+- Enhance docker build speed
+- Send confirmation email on POST /order
+
+## [v2.0.1] - 2018-05-23
+- Add knex debug mode for non-production environment(s)
+- Add count & filters for /orders
+
+## [v2.0.0] - 2018-05-21
+- Add search sort pagination
+
+## [v1.9.1] - 2018-05-17
+Add query functionality for `GET /orders`
+
+## [v1.9.0] - 2018-05-17
+Add `PUT /orders/:id`
+
+## [v1.8] - 2018-05-16
+Add `GET /orders`, `GET /orders/:id`, `POST /order`
