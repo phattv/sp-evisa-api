@@ -1,3 +1,7 @@
+## [2.2.1] - 2018-08-10
+- Don't read camelCase variables
+- POST /order: use null data instead of empty string for date
+
 ## [2.2.0] - 2018-06-25
 - Update success-order email template with logo attachment
 
