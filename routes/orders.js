@@ -146,10 +146,10 @@ const configOrderApis = (app, knex) => {
 
       const arrivalDate = requestBody.arrival_date
         ? dayjs(requestBody.arrival_date).format(postgresDateFormat)
-        : '';
+        : null;
       const departureDate = requestBody.departure_date
         ? dayjs(requestBody.departure_date).format(postgresDateFormat)
-        : '';
+        : null;
 
       // save to db
       return knex
