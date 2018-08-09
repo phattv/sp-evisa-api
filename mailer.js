@@ -138,7 +138,7 @@ const prepareVisaOptionsHtml = requestBody => {
   </tr>
   <tr style="${backgroundColor}">
     <td style="${tdStyle}"><strong>Total service charge</strong></td>
-    <td style="${tdStyle}"><strong>${requestBody.price}</strong></td>
+    <td style="${tdStyle}"><strong>$${requestBody.price}</strong></td>
   </tr>
 </table>    
 `;
@@ -162,14 +162,12 @@ const prepareApplicantsHtml = applicants => {
       const formattedBirthday = applicant.birthday
         ? dayjs(applicant.birthday).format(displayDateFormat)
         : '';
-      const passportExpiry =
-        applicant.passportExpiry || applicant.passport_expiry;
-      const formattedPassportExpiry = passportExpiry
-        ? dayjs(passportExpiry).format(displayDateFormat)
+      const formattedPassportExpiry = applicant.passport_expiry
+        ? dayjs(applicant.passport_expiry).format(displayDateFormat)
         : '';
       const country = countries.find(
         country =>
-          country.value === applicant.countryId || applicant.country_id,
+          country.value === applicant.country_id,
       );
 
       return (htmlString += `
