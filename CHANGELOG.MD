@@ -1,3 +1,6 @@
+## [2.2.2] - 2018-11-02
+- Add thanhhang@evisa-vn.com to bcc for mailer.js
+
 ## [2.2.1] - 2018-08-10
 - Don't read camelCase variables
 - POST /order: use null data instead of empty string for date
